@@ -3,8 +3,8 @@ import { cn } from "@/lib/utils"
 import { vazirmatn, fontSekuya, fontIrSans, roboto, caacupeOne } from "./fonts"
 import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/Navbar"
-import { FullModeToggle } from "@/components/mode-toggle"
 import SideRayReloaded from "@/components/SideRayReloaded"
+import Footer from "@/components/Footer"
 
 export default function RootLayout({
   children,
@@ -36,9 +36,7 @@ export default function RootLayout({
           <SideRayReloaded />
           <Navbar />
           {children}
-          <div className="sticky right-0 bottom-0 m-5">
-            <FullModeToggle />
-          </div>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

@@ -1,12 +1,7 @@
-export default function BlogCardSkeleton({
-  height,
-}: {
-  height: number
-}) {
+export default function BlogCardSkeleton() {
   return (
     <article
       className="relative w-full overflow-hidden rounded-xl bg-card"
-      style={{ height }}
     >
       <div className="absolute inset-0 animate-pulse bg-muted" />
 
