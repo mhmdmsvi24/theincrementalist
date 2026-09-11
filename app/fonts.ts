@@ -118,3 +118,14 @@ export const fontSekuya = localFont({
   src: "./fonts/Sekuya-Regular.woff2",
   style: "normal",
 })
+
+
+// ─────────────────────────────────────────────
+// CaacupeOne
+// ─────────────────────────────────────────────
+
+export const caacupeOne = localFont({
+  variable: "--font-caacupe",
+  src: "./fonts/CaacupeOne-Regular.ttf",
+  style: "normal",
+})

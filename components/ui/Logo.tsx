@@ -1,10 +1,26 @@
-import logo from "@/components/assets/logo-light.png"
-import Image from "next/image"
+"use client";
+
+import logoLight from "@/components/assets/logo-light.png";
+import logoDark from "@/components/assets/logo-dark.png";
+
+import Image from "next/image";
 
 export default function Logo() {
   return (
-    <div className="max-h-12 max-w-12 rounded-full bg-white">
-      <Image src={logo} alt="incrementalist logo" />
+    <div className="relative h-12 w-12">
+      <Image
+        src={logoLight}
+        alt="incrementalist logo"
+        className="block dark:hidden"
+        fill
+      />
+
+      <Image
+        src={logoDark}
+        alt="incrementalist logo"
+        className="hidden dark:block"
+        fill
+      />
     </div>
-  )
+  );
 }

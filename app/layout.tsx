@@ -1,7 +1,10 @@
 import "./globals.css"
 import { cn } from "@/lib/utils"
-import { vazirmatn, fontSekuya, fontIrSans, roboto } from "./fonts"
+import { vazirmatn, fontSekuya, fontIrSans, roboto, caacupeOne } from "./fonts"
 import { ThemeProvider } from "@/components/theme-provider"
+import Navbar from "@/components/Navbar"
+import { FullModeToggle } from "@/components/mode-toggle"
+import SideRays from "@/components/SideRays"
 
 export default function RootLayout({
   children,
@@ -18,20 +21,37 @@ export default function RootLayout({
         vazirmatn.variable,
         fontSekuya.variable,
         fontIrSans.variable,
-        roboto.variable
+        roboto.variable,
+        caacupeOne.variable
       )}
     >
-      <body className="font-vazir">
+      <body className="relative font-vazir">
         <ThemeProvider
-          defaultTheme="dark"
-          disableTransitionOnChange
           attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
-        <div>
-          <div className="flex flex-col items-center justify-center">
-            {children}
+          <div className="absolute inset-0 -z-10">
+            <SideRays
+              speed={2.5}
+              rayColor1="#fcfcfc"
+              rayColor2="#374ea9"
+              intensity={3}
+              spread={50}
+              origin="top-right"
+              tilt={0}
+              saturation={1.5}
+              blend={0.75}
+              falloff={1.6}
+              opacity={1}
+            />
           </div>
-        </div>
+          <Navbar />
+          {children}
+          <div className="sticky right-0 bottom-0 m-5">
+            <FullModeToggle />
+          </div>
         </ThemeProvider>
       </body>
     </html>
