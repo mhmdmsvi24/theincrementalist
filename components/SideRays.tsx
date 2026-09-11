@@ -273,7 +273,7 @@ void main() {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-full overflow-hidden pointer-events-none z-[3] ${className}`.trim()}
+      className={`relative w-full h-full overflow-hidden pointer-events-none z-3 ${className}`.trim()}
     />
   );
 };

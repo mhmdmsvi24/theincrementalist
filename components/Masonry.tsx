@@ -1,7 +1,6 @@
 "use client"
 
 import React, {
-  Suspense,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -11,7 +10,6 @@ import React, {
 import { gsap } from "gsap"
 import BlogCard from "../app/blog/BlogCard"
 import type { BlogPost as Item } from "@/types/blog"
-import Loading from "../app/blog/loading"
 
 const useMedia = (
   queries: string[],
@@ -143,9 +141,9 @@ const Masonry: React.FC<MasonryProps> = ({
     }
   }
 
-  useEffect(() => {
-    preloadImages(items.map((i) => i.image)).then(() => setImagesReady(true))
-  }, [items])
+  // useEffect(() => {
+  //   preloadImages(items.map((i) => i.image)).then(() => setImagesReady(true))
+  // }, [items])
 
   const grid = useMemo<GridItem[]>(() => {
     if (!width) return []
@@ -176,7 +174,7 @@ const Masonry: React.FC<MasonryProps> = ({
   const hasMounted = useRef(false)
 
   useLayoutEffect(() => {
-    if (!imagesReady) return
+    if (!grid.length) return
 
     grid.forEach((item, index) => {
       const selector = `[data-key="${item.id}"]`
@@ -214,7 +212,7 @@ const Masonry: React.FC<MasonryProps> = ({
     })
 
     hasMounted.current = true
-  }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease])
+  }, [grid, stagger, animateFrom, blurToFocus, duration, ease])
 
   const handleMouseEnter = (id: string, element: HTMLElement) => {
     if (scaleOnHover) {
@@ -246,31 +244,32 @@ const Masonry: React.FC<MasonryProps> = ({
 
   return (
     <div
-        ref={containerRef}
-        className="relative w-full"
-        style={{
-          height: grid.length
-            ? Math.max(...grid.map((item) => item.y + item.h))
-            : 0,
-        }}
-      >
-        {width > 0 &&
-          grid.map((item) => (
-            <div
-              key={item.id}
-              data-key={item.id}
-              className="absolute top-0 left-0"
-              style={{
-                width: item.w,
-                height: item.h,
-                transform: `translate3d(${item.x}px, ${item.y}px, 0)`,
-                willChange: "transform, opacity",
-              }}
-            >
-              <BlogCard post={item} />
-            </div>
-          ))}
-      </div>
+      ref={containerRef}
+      className="relative w-full"
+      style={{
+        height: grid.length
+          ? Math.max(...grid.map((item) => item.y + item.h))
+          : 0,
+      }}
+    >
+      {width > 0 &&
+        grid.map((item) => (
+          <div
+            key={item.id}
+            data-key={item.id}
+            className="absolute top-0 left-0"
+            style={{
+              width: item.w,
+              height: item.h,
+              transform: `translate3d(${item.x}px, ${item.y}px, 0)`,
+              opacity: 0,
+              willChange: "transform, opacity",
+            }}
+          >
+            <BlogCard post={item} />
+          </div>
+        ))}
+    </div>
   )
 }
 
