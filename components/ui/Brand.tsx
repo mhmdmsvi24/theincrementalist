@@ -1,6 +1,13 @@
-export default function Brand() {
+import { cn } from "@/lib/utils"
+
+export default function Brand({ extraClasses }: { extraClasses?: string }) {
   return (
-    <div className="font-caacupeOne w-min text-nowrap select-none text-foreground text-xl">
+    <div
+      className={cn(
+        "w-min font-caacupeOne text-xl text-nowrap text-foreground select-none",
+        extraClasses
+      )}
+    >
       The Incrementalist
     </div>
   )

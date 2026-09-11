@@ -13,7 +13,7 @@ export default function LandingSection({
   ...props
 }: DataBoxProps) {
   const LandingSectionVariants = cva(
-    "flex w-full text-foreground flex justify-center items-center"
+    "flex w-full text-foreground flex justify-center items-center container mx-auto"
   )
 
   return (

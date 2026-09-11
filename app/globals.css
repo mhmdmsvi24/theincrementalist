@@ -72,6 +72,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+
 @theme inline {
   /* Vazir */
   --font-vazir: var(--font-vazirmatn);
@@ -158,5 +159,148 @@
 
   .absolute-x-center {
     @apply absolute bottom-0;
+  }
+}
+
+/* Blog Article
+-------------------------------------------------- */
+
+.article-content,
+.article-section,
+.article-ending {
+  font-size: 1.125rem;
+  line-height: 1.9;
+  color: var(--foreground);
+}
+
+.article-content p,
+.article-section p,
+.article-ending p {
+  margin-top: 1.5rem;
+}
+
+.article-content p:first-child {
+  margin-top: 0;
+}
+
+.article-section {
+  margin-top: 5rem;
+}
+
+.article-section h2,
+.article-ending h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.875rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.article-section p,
+.article-ending p {
+  color: var(--muted-foreground);
+}
+
+.article-ending {
+  margin-top: 5rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Links inside articles */
+
+.article-content a,
+.article-section a,
+.article-ending a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Blockquotes */
+
+.article-content blockquote,
+.article-section blockquote {
+  margin: 2.5rem 0;
+  border-left: 3px solid var(--primary);
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--muted-foreground);
+}
+
+/* Inline code */
+
+.article-content code,
+.article-section code,
+.article-ending code {
+  border-radius: 0.375rem;
+  background: var(--secondary);
+  padding: 0.15rem 0.4rem;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+/* Code blocks */
+
+.article-content pre,
+.article-section pre,
+.article-ending pre {
+  margin: 2rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 1.25rem;
+  font-family: monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* Lists */
+
+.article-content ul,
+.article-content ol,
+.article-section ul,
+.article-section ol {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+  color: var(--muted-foreground);
+}
+
+.article-content li,
+.article-section li {
+  margin-top: 0.6rem;
+}
+
+/* Images inside article */
+
+.article-content img,
+.article-section img {
+  margin: 2.5rem 0;
+  width: 100%;
+  height: auto;
+}
+
+/* Mobile */
+
+@media (max-width: 640px) {
+  .article-content,
+  .article-section,
+  .article-ending {
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  .article-section {
+    margin-top: 3.5rem;
+  }
+
+  .article-section h2,
+  .article-ending h2 {
+    font-size: 1.5rem;
+  }
+
+  .article-content p:first-child::first-letter {
+    font-size: 2.75rem;
   }
 }

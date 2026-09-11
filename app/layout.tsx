@@ -4,13 +4,14 @@ import { vazirmatn, fontSekuya, fontIrSans, roboto, caacupeOne } from "./fonts"
 import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/Navbar"
 import { FullModeToggle } from "@/components/mode-toggle"
-import SideRays from "@/components/SideRays"
+import SideRayReloaded from "@/components/SideRayReloaded"
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
   return (
     <html
       lang="fa-IR"
@@ -32,21 +33,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="absolute inset-0 -z-10">
-            <SideRays
-              speed={2.5}
-              rayColor1="#fcfcfc"
-              rayColor2="#374ea9"
-              intensity={3}
-              spread={50}
-              origin="top-right"
-              tilt={0}
-              saturation={1.5}
-              blend={0.75}
-              falloff={1.6}
-              opacity={1}
-            />
-          </div>
+          <SideRayReloaded />
           <Navbar />
           {children}
           <div className="sticky right-0 bottom-0 m-5">
