@@ -59,10 +59,10 @@ export default function Footer() {
             {/* Terminal status */}
             <div className="mt-8 inline-flex items-center gap-2 font-mono text-xs text-slate-500">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(56,189,248,0.8)] animate-pulse m-1" />
+              <span>وضعیت:</span>
               <span className="text-slate-300">
-                continuously_improving
+                در حال توسعه
               </span>
-              <span>:status</span>
             </div>
           </div>
 
