@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: incrementalist-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: incrementalist
+      POSTGRES_PASSWORD: incrementalist
+      POSTGRES_DB: incrementalist
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

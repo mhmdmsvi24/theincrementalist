@@ -1,9 +1,15 @@
-import { Button } from "./ui/button"
+import { buttonVariants } from "./ui/button"
 import Logo from "./ui/Logo"
 import Brand from "./ui/Brand"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
+import { CircleUserRound } from "lucide-react"
+import { useAuthStore } from "@/stores/auth-store"
 
 export default function Navbar() {
+  const user = useAuthStore((state) => state.user)
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+
   return (
     <nav className="sticky top-0 z-50 w-full">
       <div className="mx-auto w-[80%] pt-4">
@@ -12,17 +18,49 @@ export default function Navbar() {
             <div className="container mx-auto flex items-center justify-between">
               {/* Right */}
               <div className="flex items-stretch justify-between gap-2">
-                <Button size="lg" className="px-4 sm:w-25">
-                  ثبت نام
-                </Button>
+                {isAuthenticated ? (
+                  <Link
+                    href="/me"
+                    className={cn(
+                      buttonVariants({
+                        variant: "ghost",
+                        size: "lg",
+                      }),
+                      "gap-4 px-4"
+                    )}
+                  >
+                    <CircleUserRound className="size-7" color="#fff"/>
+                    <span className="pt-px text-lg">{user?.name}</span>
+                  </Link>
+                ) : (
+                  <>
+                    <Link
+                      href="/register"
+                      className={cn(
+                        buttonVariants({
+                          variant: "default",
+                          size: "lg",
+                        }),
+                        "px-4 sm:w-25"
+                      )}
+                    >
+                      ثبت نام
+                    </Link>
 
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="px-4 text-primary sm:w-25"
-                >
-                  ورود
-                </Button>
+                    <Link
+                      href="/login"
+                      className={cn(
+                        buttonVariants({
+                          variant: "outline",
+                          size: "lg",
+                        }),
+                        "px-4 text-primary sm:w-25"
+                      )}
+                    >
+                      ورود
+                    </Link>
+                  </>
+                )}
               </div>
 
               {/* Left */}
@@ -51,7 +89,7 @@ export default function Navbar() {
         <div className="flex items-center justify-center gap-2">
           <div className="aspect-square w-2 animate-ping rounded-full bg-yellow-500"></div>
           <div className="font-mono font-">
-            
+
           </div>
         </div>
       </div>*/}
