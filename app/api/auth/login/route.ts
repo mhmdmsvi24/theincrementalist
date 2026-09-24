@@ -7,6 +7,7 @@ import z from "zod"
 
 export async function POST(request: Request) {
   try {
+    // parse input
     const body = await request.json()
     const result = loginSchema.safeParse(body)
 
@@ -22,6 +23,7 @@ export async function POST(request: Request) {
 
     const { email, password } = result.data
 
+    // if exsits
     const user = await prisma.user.findUnique({
       where: { email },
     })
@@ -33,6 +35,7 @@ export async function POST(request: Request) {
       )
     }
 
+    // password validation
     const passwordValid = await verifyPassword(user.passwordHash, password)
 
     if (!passwordValid) {
@@ -42,6 +45,7 @@ export async function POST(request: Request) {
       )
     }
 
+    // token creation
     const accessToken = await createAccessToken(user.id)
     const refreshToken = await createRefreshToken(user.id)
 

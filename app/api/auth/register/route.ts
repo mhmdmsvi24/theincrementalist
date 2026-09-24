@@ -7,10 +7,13 @@ import { createAccessToken, createRefreshToken } from "@/lib/auth/jwt"
 
 export async function POST(request: Request) {
   try {
+    // get the body
     const body = await request.json()
 
+    // verify the structure
     const result = registerSchema.safeParse(body)
 
+    // if it doesn't fit the schema reject
     if (!result.success) {
       return NextResponse.json(
         {
@@ -21,14 +24,17 @@ export async function POST(request: Request) {
       )
     }
 
+    // otherwise get the provided data
     const { email, username, name, password } = result.data
 
+    // check if email or username exists
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [{ email }, ...(username ? [{ username }] : [])],
       },
     })
 
+    // if yes trhow error
     if (existingUser) {
       return NextResponse.json(
         { error: "Email or username already exists" },
@@ -36,8 +42,10 @@ export async function POST(request: Request) {
       )
     }
 
+    // otherwise hash the password
     const passwordHash = await hashPassword(password)
 
+    // create user
     const user = await prisma.user.create({
       data: {
         email,
@@ -54,9 +62,11 @@ export async function POST(request: Request) {
       },
     })
 
+    // create access/refresh tokens
     const accessToken = await createAccessToken(user.id)
     const refreshToken = await createRefreshToken(user.id)
 
+    // user and access token
     const response = NextResponse.json(
       {
         user,
@@ -65,15 +75,20 @@ export async function POST(request: Request) {
       { status: 201 }
     )
 
+    // mount refresh token as http cookie
     response.cookies.set("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/api/auth",
+      // 30 days
       maxAge: 60 * 60 * 24 * 30,
     })
 
+    // return the data
     return response
+
+    // anything beyond error handling return 500
   } catch (error) {
     console.error("Registration error:", error)
 

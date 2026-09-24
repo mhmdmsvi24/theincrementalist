@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { createAccessToken, verifyRefreshToken } from "@/lib/auth/jwt"
 
+// if the access token is expired but refresh token is valid create new access token
 export async function POST(request: Request) {
   try {
     const refreshToken = request.headers
