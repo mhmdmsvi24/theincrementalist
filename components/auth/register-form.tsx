@@ -3,16 +3,17 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { registerFormSchema, type RegisterFormValues } from "@/lib/auth-schemas"
 import { useRegister } from "@/hooks/use-register"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { registerSchema, type RegisterFormValues } from "@/lib/auth/validation"
+
 
 export function RegisterForm() {
   const registerMutation = useRegister()
-
+  
   const form = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerFormSchema),
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       username: "",
@@ -29,7 +30,7 @@ export function RegisterForm() {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
       <div className="space-y-2">
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">اسمت</label>
         <Input id="name" autoComplete="name" {...form.register("name")} />
         {form.formState.errors.name && (
           <p className="text-sm text-destructive">
@@ -39,7 +40,9 @@ export function RegisterForm() {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">
+          چیزی که دوست داری صدات کنن (نام کاربری)
+        </label>
         <Input
           id="username"
           autoComplete="username"
@@ -53,7 +56,7 @@ export function RegisterForm() {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">ایمیلت</label>
         <Input
           id="email"
           type="email"
@@ -68,7 +71,7 @@ export function RegisterForm() {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">رمزت</label>
         <Input
           id="password"
           type="password"
@@ -83,7 +86,7 @@ export function RegisterForm() {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword">تایید رمزت</label>
         <Input
           id="confirmPassword"
           type="password"
@@ -102,7 +105,7 @@ export function RegisterForm() {
         className="w-full"
         disabled={registerMutation.isPending}
       >
-        {registerMutation.isPending ? "Creating account..." : "Register"}
+        {registerMutation.isPending ? "در حال ثبت نام ..." : "ثبت نام"}
       </Button>
     </form>
   )

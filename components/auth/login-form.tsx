@@ -3,17 +3,17 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { loginFormSchema, type LoginFormValues } from "@/lib/auth-schemas"
 import { useLogin } from "@/hooks/use-login"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { loginSchema, type LoginFormValues } from "@/lib/auth/validation"
 
 
 export function LoginForm() {
   const loginMutation = useLogin()
 
   const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginFormSchema),
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",

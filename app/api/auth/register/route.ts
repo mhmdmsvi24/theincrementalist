@@ -1,19 +1,16 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { hashPassword } from "@/lib/auth/password"
-import { registerSchema } from "@/lib/auth/validation"
+import { registerApiSchema } from "@/lib/auth/validation"
 import { z } from "zod"
 import { createAccessToken, createRefreshToken } from "@/lib/auth/jwt"
 
 export async function POST(request: Request) {
   try {
-    // get the body
     const body = await request.json()
 
-    // verify the structure
-    const result = registerSchema.safeParse(body)
+    const result = registerApiSchema.safeParse(body)
 
-    // if it doesn't fit the schema reject
     if (!result.success) {
       return NextResponse.json(
         {
@@ -24,10 +21,8 @@ export async function POST(request: Request) {
       )
     }
 
-    // otherwise get the provided data
     const { email, username, name, password } = result.data
 
-    // check if email or username exists
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [{ email }, ...(username ? [{ username }] : [])],
@@ -37,15 +32,13 @@ export async function POST(request: Request) {
     // if yes trhow error
     if (existingUser) {
       return NextResponse.json(
-        { error: "Email or username already exists" },
+        { error: "یکی قبلا با این ایمیل یا نام کاربری وارد شده" },
         { status: 409 }
       )
     }
 
-    // otherwise hash the password
     const passwordHash = await hashPassword(password)
 
-    // create user
     const user = await prisma.user.create({
       data: {
         email,
@@ -62,11 +55,9 @@ export async function POST(request: Request) {
       },
     })
 
-    // create access/refresh tokens
     const accessToken = await createAccessToken(user.id)
     const refreshToken = await createRefreshToken(user.id)
 
-    // user and access token
     const response = NextResponse.json(
       {
         user,
@@ -87,13 +78,11 @@ export async function POST(request: Request) {
 
     // return the data
     return response
-
-    // anything beyond error handling return 500
   } catch (error) {
     console.error("Registration error:", error)
 
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "مشکل از تو نیست، از ماست :)" },
       { status: 500 }
     )
   }

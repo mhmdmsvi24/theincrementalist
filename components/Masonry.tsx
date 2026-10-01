@@ -8,7 +8,7 @@ import React, {
   useState,
 } from "react"
 import { gsap } from "gsap"
-import BlogCard from "../app/blog/BlogCard"
+import BlogCard from "../app/(site)/blog/BlogCard"
 import type { BlogPost as Item } from "@/types/blog"
 
 const useMedia = (
