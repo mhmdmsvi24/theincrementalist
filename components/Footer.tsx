@@ -33,7 +33,7 @@ export default function Footer() {
       />
 
       {/* Ambient glow */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-50 w-full -translate-x-1/2 rounded-full bg-indigo-600/30 animate-pulse blur-3xl" />
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-50 w-full -translate-x-1/2 animate-pulse rounded-full bg-indigo-600/30 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
         {/* Main footer */}
@@ -58,11 +58,9 @@ export default function Footer() {
 
             {/* Terminal status */}
             <div className="mt-8 inline-flex items-center gap-2 font-mono text-xs text-slate-500">
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(56,189,248,0.8)] animate-pulse m-1" />
+              <span className="m-1 h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
               <span>وضعیت:</span>
-              <span className="text-slate-300">
-                در حال توسعه
-              </span>
+              <span className="text-slate-300">در حال توسعه</span>
             </div>
           </div>
 
@@ -114,7 +112,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col gap-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             © {new Date().getFullYear()}
             <div className="sticky right-0 bottom-0 m-5">
               <FullModeToggle />

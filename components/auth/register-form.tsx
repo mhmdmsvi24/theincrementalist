@@ -8,15 +8,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { registerSchema, type RegisterFormValues } from "@/lib/auth/validation"
 
-
 export function RegisterForm() {
   const registerMutation = useRegister()
-  
+
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
-      username: "",
+      // username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -39,7 +38,7 @@ export function RegisterForm() {
         )}
       </div>
 
-      <div className="space-y-2">
+      {/*<div className="space-y-2">
         <label htmlFor="username">
           چیزی که دوست داری صدات کنن (نام کاربری)
         </label>
@@ -53,7 +52,7 @@ export function RegisterForm() {
             {form.formState.errors.username.message}
           </p>
         )}
-      </div>
+      </div>*/}
 
       <div className="space-y-2">
         <label htmlFor="email">ایمیلت</label>

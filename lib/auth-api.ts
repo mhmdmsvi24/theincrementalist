@@ -27,13 +27,13 @@ export async function login(email: string, password: string) {
 
 export async function register(
   name: string,
-  username: string,
+  // username: string,
   email: string,
-  password: string,
+  password: string
 ) {
   const { data } = await api.post<AuthResponse>("/auth/register", {
     name,
-    username,
+    // username,
     email,
     password,
   })

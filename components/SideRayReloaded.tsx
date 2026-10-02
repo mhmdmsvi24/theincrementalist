@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import SideRays from "@/components/SideRays"
 import { useTheme } from "next-themes"

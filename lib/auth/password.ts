@@ -6,9 +6,6 @@ export function hashPassword(password: string) {
   })
 }
 
-export function verifyPassword(
-  passwordHash: string,
-  password: string
-) {
+export function verifyPassword(passwordHash: string, password: string) {
   return argon2.verify(passwordHash, password)
 }

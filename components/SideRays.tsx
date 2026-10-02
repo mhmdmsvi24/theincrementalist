@@ -1,118 +1,131 @@
-"use client";
+"use client"
 
-import { useRef, useEffect, useState } from 'react';
-import { Renderer, Program, Triangle, Mesh } from 'ogl';
+import { useRef, useEffect, useState } from "react"
+import { Renderer, Program, Triangle, Mesh } from "ogl"
 
-type Origin = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+type Origin = "top-right" | "top-left" | "bottom-right" | "bottom-left"
 
 interface SideRaysProps {
-  speed?: number;
-  rayColor1?: string;
-  rayColor2?: string;
-  intensity?: number;
-  spread?: number;
-  origin?: Origin;
-  tilt?: number;
-  saturation?: number;
-  blend?: number;
-  falloff?: number;
-  opacity?: number;
-  className?: string;
+  speed?: number
+  rayColor1?: string
+  rayColor2?: string
+  intensity?: number
+  spread?: number
+  origin?: Origin
+  tilt?: number
+  saturation?: number
+  blend?: number
+  falloff?: number
+  opacity?: number
+  className?: string
 }
 
 const hexToRgb = (hex: string): [number, number, number] => {
-  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return m ? [parseInt(m[1], 16) / 255, parseInt(m[2], 16) / 255, parseInt(m[3], 16) / 255] : [1, 1, 1];
-};
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  return m
+    ? [
+        parseInt(m[1], 16) / 255,
+        parseInt(m[2], 16) / 255,
+        parseInt(m[3], 16) / 255,
+      ]
+    : [1, 1, 1]
+}
 
 const originToFlip = (origin: Origin): [number, number] => {
   switch (origin) {
-    case 'top-left': return [1, 0];
-    case 'bottom-right': return [0, 1];
-    case 'bottom-left': return [1, 1];
-    default: return [0, 0];
+    case "top-left":
+      return [1, 0]
+    case "bottom-right":
+      return [0, 1]
+    case "bottom-left":
+      return [1, 1]
+    default:
+      return [0, 0]
   }
-};
+}
 
 const SideRays = ({
   speed = 2.5,
-  rayColor1 = '#EAB308',
-  rayColor2 = '#96c8ff',
+  rayColor1 = "#EAB308",
+  rayColor2 = "#96c8ff",
   intensity = 2,
   spread = 2,
-  origin = 'top-right',
+  origin = "top-right",
   tilt = 0,
   saturation = 1.5,
   blend = 0.75,
   falloff = 2.0,
   opacity = 1.0,
-  className = ''
+  className = "",
 }: SideRaysProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const uniformsRef = useRef<Record<string, { value: number | number[] }> | null>(null);
-  const rendererRef = useRef<Renderer | null>(null);
-  const animationIdRef = useRef<number | null>(null);
-  const meshRef = useRef<Mesh | null>(null);
-  const cleanupFunctionRef = useRef<(() => void) | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const uniformsRef = useRef<Record<
+    string,
+    { value: number | number[] }
+  > | null>(null)
+  const rendererRef = useRef<Renderer | null>(null)
+  const animationIdRef = useRef<number | null>(null)
+  const meshRef = useRef<Mesh | null>(null)
+  const cleanupFunctionRef = useRef<(() => void) | null>(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const observerRef = useRef<IntersectionObserver | null>(null)
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current) return
 
     observerRef.current = new IntersectionObserver(
-      entries => {
-        const entry = entries[0];
-        setIsVisible(entry.isIntersecting);
+      (entries) => {
+        const entry = entries[0]
+        setIsVisible(entry.isIntersecting)
       },
       { threshold: 0.1 }
-    );
+    )
 
-    observerRef.current.observe(containerRef.current);
+    observerRef.current.observe(containerRef.current)
 
     return () => {
       if (observerRef.current) {
-        observerRef.current.disconnect();
-        observerRef.current = null;
+        observerRef.current.disconnect()
+        observerRef.current = null
       }
-    };
-  }, []);
+    }
+  }, [])
 
   useEffect(() => {
-    if (!isVisible || !containerRef.current) return;
+    if (!isVisible || !containerRef.current) return
 
     if (cleanupFunctionRef.current) {
-      cleanupFunctionRef.current();
-      cleanupFunctionRef.current = null;
+      cleanupFunctionRef.current()
+      cleanupFunctionRef.current = null
     }
 
     const initializeWebGL = async () => {
-      if (!containerRef.current) return;
+      if (!containerRef.current) return
 
-      await new Promise<void>(resolve => setTimeout(resolve, 10));
+      await new Promise<void>((resolve) => setTimeout(resolve, 10))
 
-      if (!containerRef.current) return;
+      if (!containerRef.current) return
 
       const renderer = new Renderer({
         dpr: Math.min(window.devicePixelRatio, 2),
-        alpha: true
-      });
-      rendererRef.current = renderer;
+        alpha: true,
+      })
+      rendererRef.current = renderer
 
-      const gl = renderer.gl;
-      gl.canvas.style.width = '100%';
-      gl.canvas.style.height = '100%';
+      const gl = renderer.gl
+      gl.canvas.style.width = "100%"
+      gl.canvas.style.height = "100%"
 
       while (containerRef.current.firstChild) {
-        containerRef.current.removeChild(containerRef.current.firstChild);
+        containerRef.current.removeChild(containerRef.current.firstChild)
       }
-      containerRef.current.appendChild(gl.canvas);
+      containerRef.current.appendChild(gl.canvas)
 
       const vert = `
 attribute vec2 position;
 void main() {
   gl_Position = vec4(position, 0.0, 1.0);
-}`;
+}`
 
       const frag = `precision highp float;
 
@@ -173,9 +186,9 @@ void main() {
 
   color.a = max(color.r, max(color.g, color.b)) * iOpacity;
   gl_FragColor = color;
-}`;
+}`
 
-      const [flipX, flipY] = originToFlip(origin);
+      const [flipX, flipY] = originToFlip(origin)
       const uniforms = {
         iTime: { value: 0 },
         iResolution: { value: [1, 1] as number[] },
@@ -190,92 +203,123 @@ void main() {
         iSaturation: { value: saturation },
         iBlend: { value: blend },
         iFalloff: { value: falloff },
-        iOpacity: { value: opacity }
-      };
-      uniformsRef.current = uniforms;
+        iOpacity: { value: opacity },
+      }
+      uniformsRef.current = uniforms
 
-      const geometry = new Triangle(gl);
-      const program = new Program(gl, { vertex: vert, fragment: frag, uniforms });
-      const mesh = new Mesh(gl, { geometry, program });
-      meshRef.current = mesh;
+      const geometry = new Triangle(gl)
+      const program = new Program(gl, {
+        vertex: vert,
+        fragment: frag,
+        uniforms,
+      })
+      const mesh = new Mesh(gl, { geometry, program })
+      meshRef.current = mesh
 
       const updateSize = () => {
-        if (!containerRef.current || !renderer) return;
-        renderer.dpr = Math.min(window.devicePixelRatio, 2);
-        const { clientWidth: w, clientHeight: h } = containerRef.current;
-        renderer.setSize(w, h);
-        uniforms.iResolution.value = [w * renderer.dpr, h * renderer.dpr];
-      };
+        if (!containerRef.current || !renderer) return
+        renderer.dpr = Math.min(window.devicePixelRatio, 2)
+        const { clientWidth: w, clientHeight: h } = containerRef.current
+        renderer.setSize(w, h)
+        uniforms.iResolution.value = [w * renderer.dpr, h * renderer.dpr]
+      }
 
       const loop = (t: number) => {
-        if (!rendererRef.current || !uniformsRef.current || !meshRef.current) return;
-        uniforms.iTime.value = t * 0.001;
+        if (!rendererRef.current || !uniformsRef.current || !meshRef.current)
+          return
+        uniforms.iTime.value = t * 0.001
         try {
-          renderer.render({ scene: mesh });
-          animationIdRef.current = requestAnimationFrame(loop);
+          renderer.render({ scene: mesh })
+          animationIdRef.current = requestAnimationFrame(loop)
         } catch (e) {
-          return;
+          return
         }
-      };
+      }
 
-      window.addEventListener('resize', updateSize);
-      updateSize();
-      animationIdRef.current = requestAnimationFrame(loop);
+      window.addEventListener("resize", updateSize)
+      updateSize()
+      animationIdRef.current = requestAnimationFrame(loop)
 
       cleanupFunctionRef.current = () => {
         if (animationIdRef.current) {
-          cancelAnimationFrame(animationIdRef.current);
-          animationIdRef.current = null;
+          cancelAnimationFrame(animationIdRef.current)
+          animationIdRef.current = null
         }
-        window.removeEventListener('resize', updateSize);
+        window.removeEventListener("resize", updateSize)
         if (renderer) {
           try {
-            const loseCtx = renderer.gl.getExtension('WEBGL_lose_context');
-            if (loseCtx) loseCtx.loseContext();
-            const canvas = renderer.gl.canvas;
-            if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
+            const loseCtx = renderer.gl.getExtension("WEBGL_lose_context")
+            if (loseCtx) loseCtx.loseContext()
+            const canvas = renderer.gl.canvas
+            if (canvas && canvas.parentNode)
+              canvas.parentNode.removeChild(canvas)
           } catch (e) {}
         }
-        rendererRef.current = null;
-        uniformsRef.current = null;
-        meshRef.current = null;
-      };
-    };
+        rendererRef.current = null
+        uniformsRef.current = null
+        meshRef.current = null
+      }
+    }
 
-    initializeWebGL();
+    initializeWebGL()
 
     return () => {
       if (cleanupFunctionRef.current) {
-        cleanupFunctionRef.current();
-        cleanupFunctionRef.current = null;
+        cleanupFunctionRef.current()
+        cleanupFunctionRef.current = null
       }
-    };
-  }, [isVisible, speed, rayColor1, rayColor2, intensity, spread, origin, tilt, saturation, blend, falloff, opacity]);
+    }
+  }, [
+    isVisible,
+    speed,
+    rayColor1,
+    rayColor2,
+    intensity,
+    spread,
+    origin,
+    tilt,
+    saturation,
+    blend,
+    falloff,
+    opacity,
+  ])
 
   useEffect(() => {
-    if (!uniformsRef.current) return;
-    const u = uniformsRef.current;
-    u.iSpeed.value = speed;
-    u.iRayColor1.value = hexToRgb(rayColor1);
-    u.iRayColor2.value = hexToRgb(rayColor2);
-    u.iIntensity.value = intensity;
-    u.iSpread.value = spread;
-    const [flipX, flipY] = originToFlip(origin);
-    u.iFlipX.value = flipX;
-    u.iFlipY.value = flipY;
-    u.iTilt.value = tilt;
-    u.iSaturation.value = saturation;
-    u.iBlend.value = blend;
-    u.iFalloff.value = falloff;
-    u.iOpacity.value = opacity;
-  }, [speed, rayColor1, rayColor2, intensity, spread, origin, tilt, saturation, blend, falloff, opacity]);
+    if (!uniformsRef.current) return
+    const u = uniformsRef.current
+    u.iSpeed.value = speed
+    u.iRayColor1.value = hexToRgb(rayColor1)
+    u.iRayColor2.value = hexToRgb(rayColor2)
+    u.iIntensity.value = intensity
+    u.iSpread.value = spread
+    const [flipX, flipY] = originToFlip(origin)
+    u.iFlipX.value = flipX
+    u.iFlipY.value = flipY
+    u.iTilt.value = tilt
+    u.iSaturation.value = saturation
+    u.iBlend.value = blend
+    u.iFalloff.value = falloff
+    u.iOpacity.value = opacity
+  }, [
+    speed,
+    rayColor1,
+    rayColor2,
+    intensity,
+    spread,
+    origin,
+    tilt,
+    saturation,
+    blend,
+    falloff,
+    opacity,
+  ])
 
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-full overflow-hidden pointer-events-none z-3 ${className}`.trim()}
+      className={`pointer-events-none relative z-3 h-full w-full overflow-hidden ${className}`.trim()}
     />
-  );
-};
+  )
+}
 
-export default SideRays;
+export default SideRays

@@ -1,3 +1,5 @@
+"use client"
+
 import { buttonVariants } from "./ui/button"
 import Logo from "./ui/Logo"
 import Brand from "./ui/Brand"
@@ -29,7 +31,7 @@ export default function Navbar() {
                       "gap-4 px-4"
                     )}
                   >
-                    <CircleUserRound className="size-7" color="#fff"/>
+                    <CircleUserRound className="size-7" color="#fff" />
                     <span className="pt-px text-lg">{user?.name}</span>
                   </Link>
                 ) : (

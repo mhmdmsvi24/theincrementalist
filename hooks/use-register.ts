@@ -17,15 +17,21 @@ export function useRegister() {
   return useMutation({
     mutationFn: ({
       name,
-      username,
+      // username,
       email,
       password,
     }: {
       name: string
-      username: string
+      // username: string
       email: string
       password: string
-    }) => register(name, username, email, password),
+    }) =>
+      register(
+        name,
+        // username,
+        email,
+        password
+      ),
 
     onSuccess: ({ user, accessToken }) => {
       setUser(user)

@@ -3,7 +3,7 @@ import { Button } from "./ui/button"
 
 export default function Header() {
   return (
-    <header className="flex w-full flex-col items-center justify-center gap-14 h-[calc(100svh-320px)]">
+    <header className="flex h-[calc(100svh-320px)] w-full flex-col items-center justify-center gap-14">
       <HAndS
         headline="آرزو هاتو به دستاورد تبدیل کن"
         subhead="با کمترین انرژی و زمان یادبگیر استارتاپ آرزو هاتو راه بندازی"

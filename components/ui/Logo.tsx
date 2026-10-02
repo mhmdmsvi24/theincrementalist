@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import logoLight from "@/components/assets/logo-light.png";
-import logoDark from "@/components/assets/logo-dark.png";
+import logoLight from "@/components/assets/logo-light.png"
+import logoDark from "@/components/assets/logo-dark.png"
 
-import Image from "next/image";
+import Image from "next/image"
 
 export default function Logo() {
   return (
@@ -22,5 +22,5 @@ export default function Logo() {
         fill
       />
     </div>
-  );
+  )
 }

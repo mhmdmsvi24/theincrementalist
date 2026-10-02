@@ -21,9 +21,7 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
   "include": [
     "next-env.d.ts",
@@ -32,7 +30,8 @@
     "**/*.tsx",
     "**/*.mts",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
-, "app/(site)/blog/[slug]"  ],
+    ".next/dev/types/**/*.ts",
+    "app/(site)/blog/[slug]"
+  ],
   "exclude": ["node_modules"]
 }

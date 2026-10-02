@@ -4,6 +4,7 @@ import { hashPassword } from "@/lib/auth/password"
 import { registerApiSchema } from "@/lib/auth/validation"
 import { z } from "zod"
 import { createAccessToken, createRefreshToken } from "@/lib/auth/jwt"
+import { generateRandomUsernameFromEmail } from "@/lib/utils"
 
 export async function POST(request: Request) {
   try {
@@ -21,15 +22,19 @@ export async function POST(request: Request) {
       )
     }
 
-    const { email, username, name, password } = result.data
+    const {
+      email,
+      // username,
+      name,
+      password,
+    } = result.data
 
     const existingUser = await prisma.user.findFirst({
       where: {
-        OR: [{ email }, ...(username ? [{ username }] : [])],
+        email,
       },
     })
 
-    // if yes trhow error
     if (existingUser) {
       return NextResponse.json(
         { error: "یکی قبلا با این ایمیل یا نام کاربری وارد شده" },
@@ -37,6 +42,8 @@ export async function POST(request: Request) {
       )
     }
 
+    // create random username
+    const username = generateRandomUsernameFromEmail(email)
     const passwordHash = await hashPassword(password)
 
     const user = await prisma.user.create({

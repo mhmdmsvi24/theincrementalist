@@ -22,7 +22,7 @@ export default function RootLayout({
       )}
     >
       <body className="relative font-vazir">
-          <Providers>{children}</Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

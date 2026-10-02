@@ -221,8 +221,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             </p>
 
             <blockquote>
-              Not everything needs to be interactive. Don&apos;t send JavaScript to
-              the browser unless the browser actually needs it.
+              Not everything needs to be interactive. Don&apos;t send JavaScript
+              to the browser unless the browser actually needs it.
             </blockquote>
 
             <p>
@@ -237,8 +237,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             <h2>Conclusion</h2>
 
             <p>
-              React Server Components aren&apos;t simply another React feature. They
-              encourage a different way of thinking about application
+              React Server Components aren&apos;t simply another React feature.
+              They encourage a different way of thinking about application
               architecture.
             </p>
 

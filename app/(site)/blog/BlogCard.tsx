@@ -6,7 +6,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
   return (
     <Link href={`/blog/${post.slug}`}>
       <article className="group relative h-full w-full overflow-hidden rounded-xl bg-card shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)]">
-      <Image
+        <Image
           fill
           src={post.image}
           alt={post.title}
@@ -24,18 +24,14 @@ export default function BlogCard({ post }: { post: BlogPost }) {
             {post.tag}
           </span>
 
-          <h2 className="text-xl leading-tight font-bold">
-            {post.title}
-          </h2>
+          <h2 className="text-xl leading-tight font-bold">{post.title}</h2>
 
           <p className="mt-2 line-clamp-3 text-sm text-white/75">
             {post.description}
           </p>
 
           {post.date && (
-            <time className="mt-4 text-xs text-white/55">
-              {post.date}
-            </time>
+            <time className="mt-4 text-xs text-white/55">{post.date}</time>
           )}
         </div>
       </article>

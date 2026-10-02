@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { loginSchema, type LoginFormValues } from "@/lib/auth/validation"
 
-
 export function LoginForm() {
   const loginMutation = useLogin()
 

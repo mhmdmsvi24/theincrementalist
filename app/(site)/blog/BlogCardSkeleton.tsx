@@ -1,8 +1,6 @@
 export default function BlogCardSkeleton() {
   return (
-    <article
-      className="relative w-full overflow-hidden rounded-xl bg-card"
-    >
+    <article className="relative w-full overflow-hidden rounded-xl bg-card">
       <div className="absolute inset-0 animate-pulse bg-muted" />
 
       <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />

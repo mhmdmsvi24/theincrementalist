@@ -30,13 +30,19 @@ const themes = [
 export function FullModeToggle() {
   const { theme, setTheme } = useTheme()
 
-  const mounted = useSyncExternalStore( emptySubscribe, () => true, () => false )
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  )
 
-  const toggleTheme = () => { setTheme(theme === "dark" ? "light" : "dark") }
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark")
+  }
 
   if (!mounted) {
     return (
-      <div className="flex items-center p-1 w-min">
+      <div className="flex w-min items-center p-1">
         {themes.map(({ value, label, icon: Icon }) => (
           <Button
             key={value}
@@ -55,7 +61,7 @@ export function FullModeToggle() {
   }
 
   return (
-    <div className="flex items-center p-1 w-min">
+    <div className="flex w-min items-center p-1">
       {themes.map(({ value, label, icon: Icon }) => {
         const isActive = theme === value
 
@@ -84,19 +90,20 @@ export function FullModeToggle() {
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme()
-  
-  const mounted = useSyncExternalStore( emptySubscribe, () => true, () => false )
 
-  const toggleTheme = () => { setTheme(theme === "dark" ? "light" : "dark") }
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  )
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark")
+  }
 
   if (!mounted) {
     return (
-      <Button
-        variant="ghost"
-        size="icon"
-        aria-label="Toggle theme"
-        disabled
-      >
+      <Button variant="ghost" size="icon" aria-label="Toggle theme" disabled>
         <Contrast className="size-5" />
       </Button>
     )

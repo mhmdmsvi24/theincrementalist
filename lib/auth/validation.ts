@@ -59,7 +59,7 @@ const confirmPasswordSchema = z.string({
 
 const registerFields = z.object({
   name: nameSchema,
-  username: usernameSchema,
+  // username: usernameSchema,
   email: emailSchema,
   password: passwordSchema,
   confirmPassword: confirmPasswordSchema,
