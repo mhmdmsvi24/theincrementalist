@@ -19,7 +19,7 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="relative mt-32 overflow-hidden border-t border-white/5 bg-[#f8fafc] dark:bg-[#0b1120]">
+    <footer className="relative overflow-hidden border-t border-white/5 bg-[#f8fafc] dark:bg-[#0b1120]">
       {/* Subtle background grid */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.025]"
@@ -35,7 +35,7 @@ export default function Footer() {
       {/* Ambient glow */}
       <div className="pointer-events-none absolute -top-40 left-1/2 h-50 w-full -translate-x-1/2 animate-pulse rounded-full bg-indigo-600/30 blur-3xl" />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
+      <div className="relative mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
         {/* Main footer */}
         <div className="grid gap-14 lg:grid-cols-[1.5fr_1fr_1fr]">
           {/* Brand */}
