@@ -3,8 +3,8 @@
 import { useEffect } from "react"
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
-import { getCurrentUser, refreshAccessToken } from "@/lib/auth-api"
-import { useAuthStore } from "@/stores/auth-store"
+import { getCurrentUser, refreshAccessToken } from "../api/auth-api"
+import { useAuthStore } from "../store/auth-store"
 
 export function useAuth() {
   const setUser = useAuthStore((state) => state.setUser)

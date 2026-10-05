@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { verifyPassword } from "@/lib/auth/password"
-import { createAccessToken, createRefreshToken } from "@/lib/auth/jwt"
-import { loginSchema } from "@/lib/auth/validation"
 import z from "zod"
+import { loginSchema } from "@/features/auth/validation"
+import { createAccessToken, createRefreshToken } from "@/features/auth/jwt"
+import { verifyPassword } from "@/features/auth/password"
 
 export async function POST(request: Request) {
   try {

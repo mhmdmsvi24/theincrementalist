@@ -3,10 +3,10 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { useRegister } from "@/hooks/use-register"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { registerSchema, type RegisterFormValues } from "@/lib/auth/validation"
+import { registerSchema, type RegisterFormValues } from "../validation"
+import { useRegister } from "../hooks/use-register"
 
 export function RegisterForm() {
   const registerMutation = useRegister()

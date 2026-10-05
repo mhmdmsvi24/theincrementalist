@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { hashPassword } from "@/lib/auth/password"
-import { registerApiSchema } from "@/lib/auth/validation"
 import { z } from "zod"
-import { createAccessToken, createRefreshToken } from "@/lib/auth/jwt"
 import { generateRandomUsernameFromEmail } from "@/lib/utils"
+import { registerApiSchema } from "@/features/auth/validation"
+import { hashPassword } from "@/features/auth/password"
+import { createAccessToken, createRefreshToken } from "@/features/auth/jwt"
 
 export async function POST(request: Request) {
   try {

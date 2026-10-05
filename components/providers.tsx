@@ -1,9 +1,8 @@
 "use client"
 
+import { AuthProvider } from "@/features/auth/auth-provider"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useState } from "react"
-import { SiteShell } from "@/components/layout/site-shell"
-import { AuthProvider } from "./auth-provider"
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -21,7 +20,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <SiteShell>{children}</SiteShell>
+        {children}
       </AuthProvider>
     </QueryClientProvider>
   )

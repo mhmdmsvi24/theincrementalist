@@ -1,9 +1,7 @@
-// import HAndS from "@/components/HAndS"
 import Header from "@/components/Header"
 import LandingSection from "@/components/LandingSection"
 import Masonry from "@/components/Masonry"
 import type { BlogPost } from "@/types/blog"
-// import LandingSection from "@/components/LandingSection"
 
 const items: BlogPost[] = [
   {
@@ -277,8 +275,7 @@ export default function Page() {
     <main>
       <Header />
       <div className="relative min-h-50">
-        <LandingSection className="flex flex-col gap-10">
-          {/*<h2 className="text-3xl font-semibold">از ایده تا اجرا</h2>*/}
+        <LandingSection className="flex flex-col gap-10 my-5">
           <Masonry
             items={items}
             ease="power3.out"
@@ -294,19 +291,4 @@ export default function Page() {
       </div>
     </main>
   )
-}
-
-{
-  /*<LandingSection>
-  <HAndS
-    headline="وقتت با دوره های تموم نشدنی تلف نکن، اینجا سریع یادمیگیری، میسازی و لانچ میکنی"
-    subhead="برای خودت و زمانی که میذاری ارزش قائل باش، فرصت ها محدوده"
-  />
-</LandingSection>
-<LandingSection>
-  <HAndS
-    headline="محتوای رایگان خالی از هر چرت و پرتی، مبانی یادمیگیری، خیلی سریع!"
-    subhead="مهارت و محتوای مورد نیازت بدون اتلاف ساعت ها و حتی روزها یادمیگیری و بهشون تسلط پیدا میکنی"
-  />
-</LandingSection>*/
 }

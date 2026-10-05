@@ -1,7 +1,5 @@
-import Footer from "@/components/Footer"
-import Navbar from "@/components/Navbar"
-import SideRayReloaded from "@/components/SideRayReloaded"
-
+import { SiteShell } from "@/components/layout/site-shell"
+import SideRayReloaded from "@/components/reactbits/SideRayReloaded"
 export default function SiteLayout({
   children,
 }: {
@@ -9,10 +7,10 @@ export default function SiteLayout({
 }) {
   return (
     <>
-      <SideRayReloaded />
-      <Navbar />
-      {children}
-      <Footer />
+      <SiteShell>
+        <SideRayReloaded />
+        {children}
+      </SiteShell>
     </>
   )
 }

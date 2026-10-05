@@ -1,8 +1,15 @@
-import "./globals.css"
+import "@/app/globals.css"
 import { cn } from "@/lib/utils"
-import { vazirmatn, fontSekuya, fontIrSans, roboto, caacupeOne } from "./fonts"
+import {
+  vazirmatn,
+  fontSekuya,
+  fontIrSans,
+  roboto,
+  caacupeOne,
+} from "@/app/fonts"
 import { Providers } from "@/components/providers"
-export default function RootLayout({
+
+export default function ProfileLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -21,10 +28,8 @@ export default function RootLayout({
         caacupeOne.variable
       )}
     >
-      <body className="relative font-vazir bg-linear-to-b from-background from-60% rounded to-indigo-600/30">
-        <Providers>
-          {children}
-        </Providers>
+      <body className="relative font-vazir">
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

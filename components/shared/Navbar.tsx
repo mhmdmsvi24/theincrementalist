@@ -1,12 +1,12 @@
 "use client"
 
-import { buttonVariants } from "./ui/button"
-import Logo from "./ui/Logo"
-import Brand from "./ui/Brand"
+import { buttonVariants } from "../ui/button"
+import Logo from "./Logo"
+import Brand from "./Brand"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { CircleUserRound } from "lucide-react"
-import { useAuthStore } from "@/stores/auth-store"
+import { useAuthStore } from "@/features/auth/store/auth-store"
 
 export default function Navbar() {
   const user = useAuthStore((state) => state.user)
@@ -14,8 +14,8 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 w-full">
-      <div className="mx-auto w-[80%] pt-4">
-        <div className="overflow-hidden rounded-2xl bg-gray-500/20 px-4 backdrop-blur-2xl">
+      <div className="mx-auto">
+        <div className="overflow-hidden rounded-2xl bg-[#0b1120] px-4 backdrop-blur-2xl">
           <div className="py-3 max-md:px-3">
             <div className="container mx-auto flex items-center justify-between">
               {/* Right */}
@@ -31,8 +31,8 @@ export default function Navbar() {
                       "gap-4 px-4"
                     )}
                   >
-                    <CircleUserRound className="size-7" color="#fff" />
-                    <span className="pt-px text-lg">{user?.name}</span>
+                    <CircleUserRound className="size-6" color="#fff" />
+                    <span className="pt-px text-sm">{user?.name}</span>
                   </Link>
                 ) : (
                   <>

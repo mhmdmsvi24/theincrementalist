@@ -1,6 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, CalendarDays, Clock } from "lucide-react"
+import { notFound } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import PostTag from "../components/PostTag"
+import PostInfoTag from "../components/PostInfoTag"
 
 type BlogPost = {
   id: string
@@ -84,69 +88,38 @@ export default async function BlogPostPage({ params }: PageProps) {
   // Mock fetching a post by slug
   const post = mockPosts.find((post) => post.slug === slug)
 
-  if (!post) {
-    return (
-      <main className="flex min-h-screen items-center justify-center px-6">
-        <div className="text-center">
-          <p className="text-sm font-medium text-muted-foreground">404</p>
-
-          <h1 className="mt-2 text-4xl font-bold tracking-tight">
-            Post not found
-          </h1>
-
-          <p className="mt-4 text-muted-foreground">
-            The article you&apos;re looking for doesn&apos;t exist.
-          </p>
-
-          <Link
-            href="/blog"
-            className="mt-8 inline-flex items-center gap-2 text-sm font-medium hover:underline"
-          >
-            <ArrowLeft className="size-4" />
-            Back to blog
-          </Link>
-        </div>
-      </main>
-    )
-  }
+  if (!post) notFound()
 
   return (
     <main className="container mx-auto min-h-screen text-foreground">
       {/* Header */}
-      <header className="mx-auto max-w-5xl px-6 py-8 pb-16 md:px-10">
-        <div className="max-w-3xl">
-          <Link
-            href="/blog"
-            className="mb-10 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
+      <header className="w-full px-10 py-8 pb-8">
+        <Button
+          variant="link"
+          className="mr-auto mb-10 flex items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <Link href="/blog" className="flex h-full w-min items-center gap-4">
             بازگشت به وبلاگ
             <ArrowLeft className="size-4" />
           </Link>
+        </Button>
 
-          <div className="mb-6 flex items-center gap-3 text-sm">
-            <span className="rounded-full bg-primary px-3 py-1 font-medium text-primary-foreground">
-              {post.tag}
-            </span>
-
-            <span className="text-muted-foreground">•</span>
-
-            <span className="flex items-center gap-1.5 text-muted-foreground">
-              <CalendarDays className="size-4" />
-              {post.date}
-            </span>
-          </div>
-
+        <div className="mx-auto flex w-full max-w-6xl flex-col lg:px-10">
           <h1 className="text-3xl leading-[1.08] font-bold tracking-tight sm:text-5xl md:text-5xl">
             {post.title}
           </h1>
 
-          <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">
+          <p className="mt-7 w-full text-lg leading-8 text-muted-foreground md:text-xl">
             {post.description}
           </p>
 
-          <div className="mt-7 flex items-center gap-2 text-sm text-muted-foreground">
-            <Clock className="size-4" />
-            <span>زمان مطالعه ۸ دقیقه</span>
+          <div className="item-center mt-8 flex justify-between">
+            <PostInfoTag icon={<CalendarDays className="size-4" />}>
+              {post.date}
+            </PostInfoTag>
+            <PostInfoTag icon={<Clock className="size-4" />} className="mt-4">
+              <span>زمان مطالعه ۸ دقیقه</span>
+            </PostInfoTag>
           </div>
         </div>
       </header>
@@ -250,18 +223,13 @@ export default async function BlogPostPage({ params }: PageProps) {
           </section>
 
           {/* Tags */}
-          <div className="mt-16 flex flex-wrap gap-2 border-t border-border pt-8">
-            <span className="rounded-full bg-secondary px-3 py-1.5 text-sm">
+          <div className="mt-16 flex flex-wrap gap-4 border-t border-border pt-8">
+            <PostTag className="bg-primary px-3 py-1.5 text-sm">
               {post.tag}
-            </span>
-
-            <span className="rounded-full bg-secondary px-3 py-1.5 text-sm">
-              React
-            </span>
-
-            <span className="rounded-full bg-secondary px-3 py-1.5 text-sm">
+            </PostTag>
+            <PostTag className="bg-primary px-3 py-1.5 text-sm">
               Next.js
-            </span>
+            </PostTag>
           </div>
         </article>
       </div>

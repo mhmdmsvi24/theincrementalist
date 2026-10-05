@@ -1,7 +1,7 @@
 import Link from "next/link"
-import Logo from "./ui/Logo"
-import Brand from "./ui/Brand"
-import { FullModeToggle } from "./mode-toggle"
+import Logo from "./Logo"
+import Brand from "./Brand"
+// import { FullModeToggle } from "./mode-toggle"
 
 const footerLinks = {
   explore: [
@@ -19,9 +19,9 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/5 bg-[#f8fafc] dark:bg-[#0b1120]">
+    <footer className="relative overflow-hidden border-t border-white/5  bg-[#080d38]">
       {/* Subtle background grid */}
-      <div
+      {/*<div
         className="pointer-events-none absolute inset-0 opacity-[0.025]"
         style={{
           backgroundImage: `
@@ -30,10 +30,10 @@ export default function Footer() {
           `,
           backgroundSize: "48px 48px",
         }}
-      />
+      />*/}
 
       {/* Ambient glow */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-50 w-full -translate-x-1/2 animate-pulse rounded-full bg-indigo-600/30 blur-3xl" />
+      {/*<div className="pointer-events-none absolute -top-40 left-1/2 h-50 w-full -translate-x-1/2 animate-pulse rounded-full bg-indigo-600/30 blur-3xl" />*/}
 
       <div className="relative mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
         {/* Main footer */}
@@ -50,7 +50,7 @@ export default function Footer() {
               <Brand />
             </Link>
 
-            <p className="mt-6 max-w-sm text-sm leading-7 text-slate-400">
+            <p className="mt-6 max-w-sm text-sm leading-7 text-slate-300">
               ساختن، اندازه‌گیری و بهتر شدن؛
               <br />
               یک گام در هر تکرار.
@@ -114,9 +114,9 @@ export default function Footer() {
         <div className="flex flex-col gap-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
             © {new Date().getFullYear()}
-            <div className="sticky right-0 bottom-0 m-5">
+            {/*<div className="sticky right-0 bottom-0 m-5">
               <FullModeToggle />
-            </div>
+            </div>*/}
           </div>
           <div className="flex items-center gap-5">
             <Link

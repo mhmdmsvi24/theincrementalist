@@ -1,7 +1,9 @@
 "use client"
 
 import { ThemeProvider } from "next-themes"
-import { Toaster } from "../ui/sonner"
+import { Toaster } from "../shared/sonner"
+import Navbar from "../shared/Navbar"
+import Footer from "../shared/Footer"
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
@@ -11,8 +13,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <Toaster />
-      {children}
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <Toaster />
+        {children}
+        <Footer />
+      </div>
     </ThemeProvider>
   )
 }
