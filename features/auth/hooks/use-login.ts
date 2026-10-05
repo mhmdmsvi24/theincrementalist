@@ -3,10 +3,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
-import { login } from "@/lib/auth-api"
-import { useAuthStore } from "@/stores/auth-store"
 
 import { useRouter } from "next/navigation"
+import { useAuthStore } from "../store/auth-store"
+import { login } from "../api/auth-api"
 
 export function useLogin() {
   const router = useRouter()
