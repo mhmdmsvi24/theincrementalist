@@ -1,9 +1,9 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import BlogTopicButton from "../shared/BlogTopicButtons"
 
 const topics = [
-  { name: "همه", count: 84 },
   { name: "آنالیز کسب و کار", count: 44 },
   { name: "استارتاپ ها", count: 21 },
   { name: "توسعه محصول", count: 18 },
@@ -37,31 +37,9 @@ export function BlogHero() {
         className="absolute -top-48 -right-40 h-155 w-155 rounded-full bg-cyan-500/10 blur-[130px]"
       />
 
-      <div
-        aria-hidden
-        className="absolute top-[20%] right-[15%] h-100 w-100 rounded-full bg-indigo-500/10 blur-[120px]"
-      />
-
-      {/* Decorative diagonal lines */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-[8%] right-[-5%] h-125 w-175 opacity-20"
-      >
-        <div className="absolute top-20 right-0 h-px w-full rotate-[-27deg] bg-linear-to-r from-transparent via-cyan-400/40 to-transparent" />
-        <div className="absolute top-40 right-[-5%] h-px w-[90%] rotate-[-27deg] bg-linear-to-r from-transparent via-indigo-400/30 to-transparent" />
-        <div className="absolute top-60 right-[5%] h-px w-[75%] rotate-[-27deg] bg-linear-to-r from-transparent via-cyan-400/20 to-transparent" />
-      </div>
-
       <div className="relative mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-        {/* Eyebrow */}
-        <div className="mb-8 flex items-center gap-3 font-mono text-xs tracking-[0.25em] text-blog-accent/80">
-          <span className="h-px w-8 bg-cyan-400/60" />
-          <span>/ منابع دانش</span>
-          <span className="text-blog-dim">فهرست - ۰۰۱</span>
-        </div>
-
         {/* Heading */}
-        <div className="max-w-4xl">
+        <div className="max-w-4xl text-center sm:text-right">
           <h1 className="text-4xl leading-[1.05] font-semibold tracking-[-0.04em] text-slate-50 sm:text-5xl lg:text-7xl">
             کسب و کار، آنالیز
             <br />
@@ -92,44 +70,7 @@ export function BlogHero() {
 
           <div className="flex flex-wrap gap-2">
             {topics.map((topic, index) => (
-              <button
-                key={topic.name}
-                type="button"
-                className={cn(
-                  "group flex items-center gap-3 border px-4 py-2.5",
-                  "font-mono text-xs tracking-wide uppercase",
-                  "transition-all duration-200",
-                  index === 0
-                    ? [
-                        "border-blog-accent-border",
-                        "bg-blog-accent-soft",
-                        "text-blog-accent-hover",
-                        "hover:border-cyan-300/70",
-                        "hover:bg-cyan-400/12",
-                      ]
-                    : [
-                        "border-blog-border-strong",
-                        "bg-white/1.5",
-                        "text-blog-muted",
-                        "hover:border-white/20",
-                        "hover:bg-white/4",
-                        "hover:text-slate-200",
-                      ]
-                )}
-              >
-                <span>{topic.name}</span>
-
-                <span
-                  className={cn(
-                    "text-[10px]",
-                    index === 0
-                      ? "text-cyan-500/70"
-                      : "text-blog-dim group-hover:text-blog-subtle"
-                  )}
-                >
-                  {String(topic.count).padStart(2, "0")}
-                </span>
-              </button>
+              <BlogTopicButton key={topic.name} topic={topic} index={index}></BlogTopicButton>
             ))}
           </div>
         </div>
