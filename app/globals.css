@@ -75,15 +75,15 @@
   /* ─────────────────────────────────────────────
      Geometry
      ───────────────────────────────────────────── */
-     --radius: 0;
-     --radius-xs: 0;
-     --radius-sm: 0;
-     --radius-md: 0;
-     --radius-lg: 0;
-     --radius-xl: 0;
-     --radius-2xl: 0;
-     --radius-3xl: 0;
-     
+  --radius: 0;
+  --radius-xs: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+
   /* ─────────────────────────────────────────────
      Incrementalist palette
      ───────────────────────────────────────────── */
@@ -117,11 +117,51 @@
   --text-secondary: oklch(0.705 0.015 286.067);
   --text-muted: oklch(0.552 0.016 285.938);
   --text-disabled: oklch(0.4 0.01 285.938);
+
+  /* ─────────────────────────────────────────────
+     Blog Design Tokens
+     ───────────────────────────────────────────── */
+
+  /* Surfaces */
+  --blog-page: #0b1120;
+  --blog-surface: #0f1728;
+  --blog-surface-hover: #131d30;
+  --blog-surface-raised: #111827;
+  --blog-code-surface: #070c16;
+
+  /* Text */
+  --blog-text: #f8fafc;
+  --blog-text-primary: #f1f5f9;
+  --blog-text-secondary: var(--foreground);
+  --blog-text-muted: var(--muted-foreground);
+  --blog-text-subtle: #64748b;
+  --blog-text-dim: #475569;
+  --blog-text-faint: #334155;
+
+  /* Accent */
+  --blog-accent: #22d3ee;
+  --blog-accent-hover: #67e8f9;
+  --blog-accent-soft: rgb(34 211 238 / 10%);
+  --blog-accent-border: rgb(34 211 238 / 40%);
+
+  /* Borders and decoration */
+  --blog-border: rgb(255 255 255 / 8%);
+  --blog-border-strong: var(--border);
+  --blog-grid-line: rgb(148 163 184 / 80%);
+  --blog-grid-opacity: 0.035;
+
+  /* Feedback */
+  --blog-error: #fca5a5;
+  --blog-error-border: rgb(248 113 113 / 20%);
 }
 
 /* =========================================================
    Tailwind Theme
    ========================================================= */
+
+/* -------------------------------------------------------------------------- */
+/* Blog Design System                                                         */
+/* -------------------------------------------------------------------------- */
 
 @theme inline {
   /* Fonts */
@@ -132,6 +172,7 @@
   --font-sekuya: var(--font-sekuya);
   --font-caacupeOne: var(--font-caacupe);
   --font-heading: var(--font-heading);
+  --font-mono: var(--font-iran-sans);
 
   /* Core */
 
@@ -193,6 +234,9 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+
   /* Incrementalist */
 
   --color-cyan: var(--cyan);
@@ -212,6 +256,51 @@
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
   --color-text-disabled: var(--text-disabled);
+
+  --color-blog-page: var(--blog-page);
+  --color-blog-surface: var(--blog-surface);
+  --color-blog-surface-hover: var(--blog-surface-hover);
+  --color-blog-surface-raised: var(--blog-surface-raised);
+  --color-blog-code-surface: var(--blog-code-surface);
+
+  --color-blog-text: var(--blog-text);
+  --color-blog-text-primary: var(--blog-text-primary);
+  --color-blog-text-secondary: var(--blog-text-secondary);
+  --color-blog-muted: var(--blog-text-muted);
+  --color-blog-subtle: var(--blog-text-subtle);
+  --color-blog-dim: var(--blog-text-dim);
+  --color-blog-faint: var(--blog-text-faint);
+
+  --color-blog-accent: var(--blog-accent);
+  --color-blog-accent-hover: var(--blog-accent-hover);
+  --color-blog-accent-soft: var(--blog-accent-soft);
+  --color-blog-accent-border: var(--blog-accent-border);
+
+  --color-blog-border: var(--blog-border);
+  --color-blog-border-strong: var(--blog-border-strong);
+
+  --color-blog-error: var(--blog-error);
+  --color-blog-error-border: var(--blog-error-border);
+
+
+  --animate-neon: neon 0.3s ease-in-out;
+  @keyframes neon {
+    25% {
+      opacity: 0%;
+    }
+  
+    50% {
+      opacity: 100%;
+    }
+  
+    75% {
+      opacity: 0%;
+    }
+  
+    100% {
+      opacity: 100%;
+    }
+  }
 }
 
 /* =========================================================
@@ -259,6 +348,12 @@
 
   .absolute-x-center {
     @apply absolute bottom-0;
+  }
+
+  .animate-neon {
+      animation-name: neon;
+      animation-duration: 200ms;
+      animation-timing-function: ease-in-out;
   }
 }
 
@@ -349,7 +444,6 @@
 .article-section a,
 .article-ending a {
   color: var(--primary);
-  text-decoration: underline;
   text-underline-offset: 3px;
 }
 

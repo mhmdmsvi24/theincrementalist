@@ -1,39 +1,45 @@
+import { formatPersianDate } from "@/lib/utils"
 import type { BlogPost } from "@/types/blog"
-import Image from "next/image"
+import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 
 export default function BlogCard({ post }: { post: BlogPost }) {
+  console.log(post)
   return (
     <Link href={`/blog/${post.slug}`}>
-      <article className="group relative h-full w-full overflow-hidden rounded-xl bg-card shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)]">
-        <Image
-          fill
-          src={post.image}
-          alt={post.title}
-          sizes="(min-width: 1024px) 33.33vw, (min-width: 768px) 50vw, 100vw"
-          unoptimized
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
-
-        {/* Readability overlay */}
-        <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/55 to-black/10" />
-
-        <div className="relative flex h-full flex-col justify-end p-5 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-          <span className="mb-3 w-fit text-xs font-medium tracking-wider uppercase">
-            {post.tag}
+      <article className="group relative flex min-h-85 flex-col bg-blog-surface p-6 transition-colors duration-300 hover:bg-blog-surface-hover">
+        {/* Card number */}
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[10px] tracking-[0.2em] text-blog-dim">
+            شماره - {post.id}
           </span>
 
-          <h2 className="text-xl leading-tight font-bold">{post.title}</h2>
-
-          <p className="mt-2 line-clamp-3 text-sm text-white/75">
-            {post.description}
-          </p>
-
-          {post.date && (
-            <time className="mt-4 text-xs text-white/55">{post.date}</time>
-          )}
+          <ArrowUpRight className="h-4 w-4 text-blog-faint transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-blog-accent" />
         </div>
+
+        {/* Content */}
+        <div className="mt-12">
+          <div className="mb-4 font-mono text-[10px] tracking-[0.15em] text-blog-accent/70">
+            {post.category}
+          </div>
+
+          <h3 className="text-xl leading-snug font-medium tracking-tight text-blog-text-primary transition-colors group-hover:text-white">
+            {post.title}
+          </h3>
+
+          <p className="mt-4 text-sm leading-6 text-blog-subtle">
+            {post.excerpt}
+          </p>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-auto flex items-center justify-between border-t border-white/5 pt-5 font-mono text-[10px] text-blog-dim">
+          <span>{formatPersianDate(post.publishedAt)}</span>
+          <span>{post.readTime} دقیقه </span>
+        </div>
+
+        {/* Hover accent */}
+        <div className="absolute bottom-0 left-0 h-px w-0 bg-cyan-400 transition-all duration-300 group-hover:w-full" />
       </article>
     </Link>
   )

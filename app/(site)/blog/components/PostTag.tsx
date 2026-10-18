@@ -1,20 +1,22 @@
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 export default function PostTag({
   children,
   className,
 }: {
-  children: React.ReactNode
+  children: string
   className?: string
 }) {
   return (
-    <span
+    <Link
+      href={`/blog?children=${encodeURIComponent(children)}`}
       className={cn(
-        "flex items-center justify-center bg-primary px-3 py-1 font-medium text-primary-foreground",
+        "px-3 font-mono group text-[16px] flex items-center justify-center gap-2 tracking-[0.12em] text-blog-muted uppercase transition-colors hover:border-cyan-400/40 hover:bg-cyan-400/4 hover:text-blog-accent",
         className
       )}
     >
-      {children}
-    </span>
+      [ <span className="group-hover:animate-neon text-[12px]">{children}</span> ]
+    </Link>
   )
 }

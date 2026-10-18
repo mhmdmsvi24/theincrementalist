@@ -1,10 +1,23 @@
 export interface BlogPost {
-  id: string
+  id: number
+  slug: string
   title: string
-  description: string
+  excerpt: string
   image: string
-  tag: string
-  slug?: string
-  date?: string
-  height: number
+  category: string
+  tags: string[]
+  readTime: number
+  publishedAt: string | null
+}
+
+export interface BlogPostsResponse {
+  data: BlogPost[]
+  pagination: {
+    page: number
+    limit: number
+    total: number
+    totalPages: number
+    hasNextPage: boolean
+    hasPreviousPage: boolean
+  }
 }

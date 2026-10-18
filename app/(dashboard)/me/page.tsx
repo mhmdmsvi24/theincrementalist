@@ -24,6 +24,55 @@ import {
 
 import { useState } from "react"
 
+const activities = [
+  {
+    type: "comment",
+    icon: MessageSquare,
+    title: "Commented on",
+    target: "How to validate a startup idea",
+    time: "2 hours ago",
+  },
+  {
+    type: "like",
+    icon: Heart,
+    title: "Liked",
+    target: "The real economics of SaaS",
+    time: "Yesterday",
+  },
+  {
+    type: "save",
+    icon: Save,
+    title: "Saved",
+    target: "Business Model Canvas explained",
+    time: "2 days ago",
+  },
+  {
+    type: "comment",
+    icon: MessageSquare,
+    title: "Commented on",
+    target: "Product discovery fundamentals",
+    time: "4 days ago",
+  },
+]
+
+const courses = [
+  {
+    title: "Business Analysis Fundamentals",
+    progress: 72,
+    lessons: "18 / 25 lessons",
+  },
+  {
+    title: "Product Discovery",
+    progress: 41,
+    lessons: "9 / 22 lessons",
+  },
+  {
+    title: "Agile & Scrum Fundamentals",
+    progress: 23,
+    lessons: "5 / 21 lessons",
+  },
+]
+
 export default function ProfilePage() {
   const [editingProfile, setEditingProfile] = useState(false)
 
@@ -33,130 +82,126 @@ export default function ProfilePage() {
     email: "mohammad@example.com",
   })
 
-  const activities = [
-    {
-      type: "comment",
-      icon: MessageSquare,
-      title: "Commented on",
-      target: "How to validate a startup idea",
-      time: "2 hours ago",
-    },
-    {
-      type: "like",
-      icon: Heart,
-      title: "Liked",
-      target: "The real economics of SaaS",
-      time: "Yesterday",
-    },
-    {
-      type: "save",
-      icon: Save,
-      title: "Saved",
-      target: "Business Model Canvas explained",
-      time: "2 days ago",
-    },
-    {
-      type: "comment",
-      icon: MessageSquare,
-      title: "Commented on",
-      target: "Product discovery fundamentals",
-      time: "4 days ago",
-    },
-  ]
-
-  const courses = [
-    {
-      title: "Business Analysis Fundamentals",
-      progress: 72,
-      lessons: "18 / 25 lessons",
-    },
-    {
-      title: "Product Discovery",
-      progress: 41,
-      lessons: "9 / 22 lessons",
-    },
-    {
-      title: "Agile & Scrum Fundamentals",
-      progress: 23,
-      lessons: "5 / 21 lessons",
-    },
-  ]
-
   return (
-    <main className="min-h-screen bg-[#0b1120] text-slate-100">
-      <div className="mx-auto max-w-7xl px-6 py-10 lg:px-10">
-        {/* ───────────────── HEADER ───────────────── */}
+    <main className="relative min-h-screen overflow-hidden bg-blog-page text-blog-text-primary">
+      {/* Global grid */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, white 1px, transparent 1px),
+            linear-gradient(to bottom, white 1px, transparent 1px)
+          `,
+          backgroundSize: "48px 48px",
+        }}
+      />
 
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <div className="mb-2 flex items-center gap-2 text-xs text-slate-500">
-              <span>Dashboard</span>
-              <ChevronRight size={13} />
-              <span className="text-slate-300">Profile</span>
+      {/* Ambient glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-64 top-20 h-[600px] w-[600px] rounded-full bg-cyan-500/[0.035] blur-[140px]"
+      />
+
+      <div className="relative mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-16">
+        {/* ================================================================ */}
+        {/* HEADER                                                           */}
+        {/* ================================================================ */}
+
+        <header className="mb-10">
+          <div className="mb-4 flex items-center gap-3 font-mono text-[10px] tracking-[0.22em] text-blog-accent/70">
+            <span className="h-px w-7 bg-cyan-400/50" />
+            ACCOUNT / USER_001
+          </div>
+
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h1 className="text-3xl font-semibold tracking-[-0.03em] text-blog-text-primary sm:text-4xl">
+                Welcome back,
+                <br />
+                <span className="text-blog-subtle">{profile.name}.</span>
+              </h1>
+
+              <p className="mt-4 max-w-xl text-sm leading-6 text-blog-subtle">
+                Your personal workspace for learning, reading, and building
+                better systems.
+              </p>
             </div>
 
-            <h1 className="text-2xl font-semibold tracking-tight">Profile</h1>
+            <div className="flex items-center gap-2">
+              <button className="flex h-10 items-center gap-2 border border-blog-border-strong bg-white/2 px-4 text-xs text-blog-muted transition hover:border-white/20 hover:text-blog-text-primary">
+                <Share2 size={14} />
+                Share profile
+              </button>
+
+              <button
+                onClick={() => setEditingProfile(!editingProfile)}
+                className="flex h-10 items-center gap-2 border border-blog-accent-border bg-blog-accent-soft px-4 text-xs text-blog-accent-hover transition hover:border-cyan-300 hover:bg-cyan-400/[0.14]"
+              >
+                <Edit3 size={14} />
+                {editingProfile ? "Done editing" : "Edit profile"}
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* ================================================================ */}
+        {/* PROFILE IDENTITY                                                 */}
+        {/* ================================================================ */}
+
+        <section className="relative overflow-hidden border border-blog-border-strong bg-blog-surface-raised">
+          {/* Accent line */}
+          <div className="h-px bg-gradient-to-r from-cyan-400 via-indigo-400 to-transparent" />
+
+          {/* Decorative geometry */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute right-[-10%] top-0 h-full w-[50%] opacity-20"
+          >
+            <div className="absolute right-0 top-20 h-px w-full rotate-[-20deg] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
+
+            <div className="absolute right-0 top-32 h-px w-[80%] rotate-[-20deg] bg-gradient-to-r from-transparent via-indigo-400/20 to-transparent" />
           </div>
 
-          <div className="flex items-center gap-2">
-            <button className="flex h-10 items-center gap-2 border border-slate-700 bg-[#111827] px-4 text-sm text-slate-300 transition hover:border-slate-500 hover:text-white">
-              <Share2 size={15} />
-              Share profile
-            </button>
-
-            <button
-              onClick={() => setEditingProfile(!editingProfile)}
-              className="flex h-10 items-center gap-2 bg-cyan-400 px-4 text-sm font-medium text-slate-950 transition hover:bg-cyan-300"
-            >
-              <Edit3 size={15} />
-              {editingProfile ? "Done editing" : "Edit profile"}
-            </button>
-          </div>
-        </div>
-
-        {/* ───────────────── PROFILE HERO ───────────────── */}
-
-        <section className="border border-slate-800 bg-[#111827]">
-          <div className="h-1 bg-linear-to-r from-cyan-400 via-indigo-400 to-transparent" />
-
-          <div className="p-6 lg:p-8">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="relative p-6 lg:p-8">
+            <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+              {/* Identity */}
               <div className="flex items-center gap-5">
-                {/* Avatar */}
-                <div className="flex h-24 w-24 shrink-0 items-center justify-center border border-cyan-400/30 bg-[#0b1120] text-2xl font-semibold text-cyan-400">
+                <div className="flex h-24 w-24 shrink-0 items-center justify-center border border-cyan-400/30 bg-blog-page font-mono text-2xl font-semibold text-blog-accent">
                   MM
                 </div>
 
                 <div>
-                  <div className="flex items-center gap-3">
-                    <h2 className="text-2xl font-semibold">{profile.name}</h2>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h2 className="text-2xl font-semibold">
+                      {profile.name}
+                    </h2>
 
-                    <span className="border border-cyan-400/20 bg-cyan-400/5 px-2 py-0.5 text-[10px] tracking-wider text-cyan-400 uppercase">
-                      Member
+                    <span className="border border-cyan-400/20 bg-cyan-400/[0.05] px-2 py-1 font-mono text-[9px] tracking-[0.15em] text-blog-accent">
+                      MEMBER
                     </span>
                   </div>
 
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 font-mono text-xs text-blog-dim">
                     @{profile.username}
                   </p>
 
-                  <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-500">
+                  <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] text-blog-dim">
                     <span className="flex items-center gap-2">
-                      <Mail size={13} />
+                      <Mail size={12} />
                       {profile.email}
                     </span>
 
                     <span className="flex items-center gap-2">
-                      <CalendarDays size={13} />
-                      Joined September 2026
+                      <CalendarDays size={12} />
+                      JOINED SEP 2026
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Social links */}
+              {/* Social */}
               <div className="flex gap-2">
-                {/*<SocialButton icon={} label="LinkedIn" />*/}
                 <SocialButton icon={Send} label="Telegram" />
                 <SocialButton icon={Mail} label="Email" />
               </div>
@@ -164,23 +209,81 @@ export default function ProfilePage() {
           </div>
         </section>
 
-        {/* ───────────────── STATS ───────────────── */}
+        {/* ================================================================ */}
+        {/* STATS                                                            */}
+        {/* ================================================================ */}
 
-        <section className="grid grid-cols-2 border-x border-b border-slate-800 md:grid-cols-4">
+        <section className="grid grid-cols-2 border-x border-b border-blog-border-strong md:grid-cols-4">
           <Stat value="24" label="Posts read" />
           <Stat value="18" label="Comments" />
           <Stat value="07" label="Saved posts" />
           <Stat value="03" label="Courses active" />
         </section>
 
-        {/* ───────────────── MAIN GRID ───────────────── */}
+        {/* ================================================================ */}
+        {/* MAIN GRID                                                        */}
+        {/* ================================================================ */}
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_360px]">
-          {/* LEFT */}
+        <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_360px]">
+          {/* ============================================================ */}
+          {/* LEFT COLUMN                                                  */}
+          {/* ============================================================ */}
+
           <div className="space-y-8">
-            {/* PROFILE INFORMATION */}
+            {/* LEARNING */}
+            <DashboardSection
+              eyebrow="LEARNING_PROGRESS"
+              icon={FileText}
+              title="Active courses"
+              description="Continue where you left off."
+            >
+              <div className="space-y-3">
+                {courses.map((course, index) => (
+                  <div
+                    key={course.title}
+                    className="group border border-blog-border-strong bg-blog-page p-5 transition hover:border-white/20"
+                  >
+                    <div className="flex items-start justify-between gap-5">
+                      <div>
+                        <div className="mb-2 font-mono text-[9px] tracking-[0.18em] text-blog-faint">
+                          COURSE_{String(index + 1).padStart(2, "0")}
+                        </div>
 
-            <Section
+                        <h3 className="text-sm font-medium text-slate-200">
+                          {course.title}
+                        </h3>
+
+                        <p className="mt-1 text-xs text-blog-dim">
+                          {course.lessons}
+                        </p>
+                      </div>
+
+                      <span className="font-mono text-xs text-blog-accent">
+                        {String(course.progress).padStart(2, "0")}%
+                      </span>
+                    </div>
+
+                    <div className="mt-5 h-px bg-slate-800">
+                      <div
+                        className="h-full bg-cyan-400 transition-all"
+                        style={{ width: `${course.progress}%` }}
+                      />
+                    </div>
+
+                    <div className="mt-4 flex justify-end">
+                      <button className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-wide text-blog-dim transition hover:text-blog-accent">
+                        Continue
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </DashboardSection>
+
+            {/* PROFILE */}
+            <DashboardSection
+              eyebrow="PROFILE"
               icon={User}
               title="Profile information"
               description="Your public account information."
@@ -204,47 +307,52 @@ export default function ProfilePage() {
                   />
 
                   <div className="md:col-span-2">
-                    <InputField label="Email" value={profile.email} disabled />
+                    <InputField
+                      label="Email"
+                      value={profile.email}
+                      disabled
+                    />
                   </div>
 
                   <div className="flex justify-end md:col-span-2">
                     <button
                       onClick={() => setEditingProfile(false)}
-                      className="flex h-10 items-center gap-2 bg-cyan-400 px-5 text-sm font-medium text-slate-950 hover:bg-cyan-300"
+                      className="flex h-10 items-center gap-2 border border-blog-accent-border bg-blog-accent-soft px-5 text-xs text-blog-accent-hover transition hover:bg-cyan-400/[0.14]"
                     >
-                      <Check size={15} />
+                      <Check size={14} />
                       Save changes
                     </button>
                   </div>
                 </div>
               ) : (
-                <div className="grid gap-x-8 gap-y-6 md:grid-cols-2">
+                <div className="grid gap-x-8 gap-y-7 md:grid-cols-2">
                   <InfoField label="Full name" value={profile.name} />
-
-                  <InfoField label="Username" value={`@${profile.username}`} />
-
+                  <InfoField
+                    label="Username"
+                    value={`@${profile.username}`}
+                  />
                   <InfoField label="Email" value={profile.email} />
-
-                  <InfoField label="Member since" value="September 2026" />
+                  <InfoField
+                    label="Member since"
+                    value="September 2026"
+                  />
                 </div>
               )}
-            </Section>
+            </DashboardSection>
 
-            {/* SOCIAL PROFILES */}
-
-            <Section
+            {/* SOCIAL */}
+            <DashboardSection
+              eyebrow="PUBLIC_LINKS"
               icon={ExternalLink}
               title="Social profiles"
               description="Links displayed on your public profile."
             >
-              <div className="space-y-3">
-                {/*<SocialInput
-                  icon={() => <Image src="https://www.shadcn.io/icon/lucide-linkedin" alt="incrementalist" fill/>}
-                  label="LinkedIn"
-                  value="linkedin.com/in/mmd"
-                />*/}
-
-                <SocialInput icon={Send} label="Telegram" value="t.me/mmd" />
+              <div className="space-y-2">
+                <SocialInput
+                  icon={Send}
+                  label="Telegram"
+                  value="t.me/mmd"
+                />
 
                 <SocialInput
                   icon={AtSign}
@@ -253,156 +361,47 @@ export default function ProfilePage() {
                 />
               </div>
 
-              <button className="mt-5 flex items-center gap-2 text-xs text-cyan-400 hover:text-cyan-300">
+              <button className="mt-5 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wide text-blog-accent transition hover:text-blog-accent-hover">
                 <span className="text-base">+</span>
                 Add another profile
               </button>
-            </Section>
-
-            {/* ACTIVE COURSES */}
-
-            <Section
-              icon={FileText}
-              title="Active courses"
-              description="Continue where you left off."
-            >
-              <div className="space-y-5">
-                {courses.map((course) => (
-                  <div
-                    key={course.title}
-                    className="group border border-slate-800 bg-[#0b1120] p-4 transition hover:border-slate-700"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <h3 className="text-sm font-medium text-slate-200">
-                          {course.title}
-                        </h3>
-
-                        <p className="mt-1 text-xs text-slate-500">
-                          {course.lessons}
-                        </p>
-                      </div>
-
-                      <span className="text-xs font-medium text-cyan-400">
-                        {course.progress}%
-                      </span>
-                    </div>
-
-                    <div className="mt-4 h-1 bg-slate-800">
-                      <div
-                        className="h-full bg-cyan-400"
-                        style={{ width: `${course.progress}%` }}
-                      />
-                    </div>
-
-                    <div className="mt-3 flex justify-end">
-                      <button className="flex items-center gap-1 text-xs text-slate-500 transition hover:text-white">
-                        Continue
-                        <ChevronRight size={13} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Section>
+            </DashboardSection>
           </div>
 
-          {/* RIGHT */}
+          {/* ============================================================ */}
+          {/* RIGHT COLUMN                                                 */}
+          {/* ============================================================ */}
+
           <div className="space-y-8">
-            {/* SECURITY */}
-
-            <Section
-              icon={ShieldCheck}
-              title="Security"
-              description="Manage your account security."
-            >
-              <div className="border border-slate-800 bg-[#0b1120] p-4">
-                <div className="flex items-start gap-3">
-                  <div className="mt-0.5 text-slate-400">
-                    <Lock size={17} />
-                  </div>
-
-                  <div className="flex-1">
-                    <h3 className="text-sm font-medium">Password</h3>
-
-                    <p className="mt-1 text-xs leading-5 text-slate-500">
-                      Change your password regularly to keep your account
-                      secure.
-                    </p>
-                  </div>
-                </div>
-
-                <button className="mt-4 flex h-9 w-full items-center justify-center gap-2 border border-slate-700 text-xs text-slate-300 transition hover:border-slate-500 hover:text-white">
-                  <KeyRound size={14} />
-                  Change password
-                </button>
-              </div>
-
-              <div className="mt-4 flex items-center gap-2 text-xs text-emerald-400">
-                <Check size={13} />
-                Your account is secured
-              </div>
-            </Section>
-
-            {/* PUBLIC PROFILE */}
-
-            <Section
-              icon={Share2}
-              title="Public profile"
-              description="This is what other members can see."
-            >
-              <div className="border border-slate-800 bg-[#0b1120] p-4">
-                <p className="text-[11px] tracking-wider text-slate-600 uppercase">
-                  Profile URL
-                </p>
-
-                <p className="mt-2 font-mono text-xs break-all text-slate-400">
-                  incrementalist.com/u/{profile.username}
-                </p>
-
-                <div className="mt-4 grid grid-cols-2 gap-2">
-                  <button className="flex h-9 items-center justify-center gap-2 border border-slate-700 text-xs text-slate-300 hover:border-slate-500">
-                    <ExternalLink size={13} />
-                    View
-                  </button>
-
-                  <button className="flex h-9 items-center justify-center gap-2 border border-slate-700 text-xs text-slate-300 hover:border-slate-500">
-                    <Share2 size={13} />
-                    Share
-                  </button>
-                </div>
-              </div>
-            </Section>
-
-            {/* RECENT ACTIVITY */}
-
-            <Section
+            {/* ACTIVITY */}
+            <DashboardSection
+              eyebrow="ACTIVITY_LOG"
               icon={MoreHorizontal}
               title="Recent activity"
               description="Your latest interactions."
             >
-              <div className="space-y-0">
+              <div>
                 {activities.map((activity, index) => {
                   const Icon = activity.icon
 
                   return (
                     <div
                       key={index}
-                      className="relative flex gap-3 border-b border-slate-800 py-4 last:border-0"
+                      className="flex gap-3 border-b border-white/5 py-4 last:border-0"
                     >
-                      <div className="flex h-7 w-7 shrink-0 items-center justify-center border border-slate-800 bg-[#0b1120] text-slate-500">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center border border-blog-border-strong bg-blog-page text-blog-dim">
                         <Icon size={13} />
                       </div>
 
                       <div className="min-w-0">
-                        <p className="text-xs leading-5 text-slate-400">
+                        <p className="text-xs leading-5 text-blog-subtle">
                           {activity.title}{" "}
-                          <span className="text-slate-200">
+                          <span className="text-blog-text-secondary">
                             {activity.target}
                           </span>
                         </p>
 
-                        <p className="mt-1 text-[10px] text-slate-600">
+                        <p className="mt-1 font-mono text-[9px] text-blog-faint">
                           {activity.time}
                         </p>
                       </div>
@@ -411,81 +410,171 @@ export default function ProfilePage() {
                 })}
               </div>
 
-              <button className="mt-4 flex items-center gap-1 text-xs text-cyan-400 hover:text-cyan-300">
-                View all activity
-                <ChevronRight size={13} />
+              <button className="mt-4 flex items-center gap-1 font-mono text-[10px] uppercase tracking-wide text-blog-accent transition hover:text-blog-accent-hover">
+                View activity
+                <ChevronRight size={12} />
               </button>
-            </Section>
+            </DashboardSection>
+
+            {/* SECURITY */}
+            <DashboardSection
+              eyebrow="SECURITY"
+              icon={ShieldCheck}
+              title="Account security"
+              description="Manage your account security."
+            >
+              <div className="border border-blog-border-strong bg-blog-page p-4">
+                <div className="flex items-start gap-3">
+                  <Lock size={16} className="mt-0.5 text-blog-subtle" />
+
+                  <div>
+                    <h3 className="text-sm font-medium text-blog-text-secondary">
+                      Password
+                    </h3>
+
+                    <p className="mt-1 text-xs leading-5 text-blog-dim">
+                      Keep your account credentials secure.
+                    </p>
+                  </div>
+                </div>
+
+                <button className="mt-4 flex h-9 w-full items-center justify-center gap-2 border border-blog-border-strong font-mono text-[10px] uppercase tracking-wide text-blog-subtle transition hover:border-white/20 hover:text-slate-200">
+                  <KeyRound size={13} />
+                  Change password
+                </button>
+              </div>
+
+              <div className="mt-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wide text-emerald-400">
+                <Check size={12} />
+                System secure
+              </div>
+            </DashboardSection>
+
+            {/* PUBLIC PROFILE */}
+            <DashboardSection
+              eyebrow="PUBLIC_PROFILE"
+              icon={Share2}
+              title="Profile access"
+              description="What other members can see."
+            >
+              <div className="border border-blog-border-strong bg-blog-page p-4">
+                <p className="font-mono text-[9px] tracking-wider text-blog-faint">
+                  PROFILE_URL
+                </p>
+
+                <p className="mt-2 font-mono text-[10px] break-all text-blog-subtle">
+                  incrementalist.com/u/{profile.username}
+                </p>
+
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  <button className="flex h-9 items-center justify-center gap-2 border border-blog-border-strong font-mono text-[10px] uppercase text-blog-subtle transition hover:border-white/20 hover:text-slate-200">
+                    <ExternalLink size={12} />
+                    View
+                  </button>
+
+                  <button className="flex h-9 items-center justify-center gap-2 border border-blog-border-strong font-mono text-[10px] uppercase text-blog-subtle transition hover:border-white/20 hover:text-slate-200">
+                    <Share2 size={12} />
+                    Share
+                  </button>
+                </div>
+              </div>
+            </DashboardSection>
           </div>
         </div>
 
-        {/* ───────────────── FOOTER ACCOUNT AREA ───────────────── */}
+        {/* ================================================================ */}
+        {/* ACCOUNT FOOTER                                                  */}
+        {/* ================================================================ */}
 
-        <div className="mt-8 flex flex-col justify-between gap-4 border-t border-slate-800 pt-6 text-xs text-slate-600 md:flex-row">
-          <span>Account created September 2026</span>
+        <footer className="mt-10 flex flex-col justify-between gap-4 border-t border-blog-border-strong pt-6 font-mono text-[10px] uppercase tracking-wide text-blog-faint md:flex-row">
+          <span>ACCOUNT_CREATED // SEP_2026</span>
 
-          <button className="flex items-center gap-2 text-slate-500 hover:text-slate-300">
-            <Settings size={13} />
+          <button className="flex items-center gap-2 transition hover:text-blog-muted">
+            <Settings size={12} />
             Account settings
           </button>
-        </div>
+        </footer>
       </div>
     </main>
   )
 }
 
-/* ───────────────────────────────────────────── */
-/* SMALL COMPONENTS */
-/* ───────────────────────────────────────────── */
+/* ======================================================================== */
+/* COMPONENTS                                                              */
+/* ======================================================================== */
 
-function Section({
+function DashboardSection({
+  eyebrow,
   icon: Icon,
   title,
   description,
   children,
 }: {
+  eyebrow: string
   icon: React.ElementType
   title: string
   description: string
   children: React.ReactNode
 }) {
   return (
-    <section className="border border-slate-800 bg-[#111827]">
-      <div className="border-b border-slate-800 px-5 py-4">
-        <div className="flex items-center gap-2">
-          <Icon size={15} className="text-cyan-400" />
+    <section className="border border-blog-border-strong bg-blog-surface-raised">
+      <header className="border-b border-blog-border-strong px-5 py-4">
+        <div className="mb-1 flex items-center gap-2">
+          <Icon size={14} className="text-blog-accent/70" />
 
-          <h2 className="text-sm font-medium text-slate-200">{title}</h2>
+          <span className="font-mono text-[9px] tracking-[0.18em] text-blog-accent/60">
+            {eyebrow}
+          </span>
         </div>
 
-        <p className="mt-1 pl-5.75 text-xs text-slate-600">{description}</p>
-      </div>
+        <h2 className="text-sm font-medium text-slate-200">
+          {title}
+        </h2>
+
+        <p className="mt-1 text-xs text-blog-dim">
+          {description}
+        </p>
+      </header>
 
       <div className="p-5">{children}</div>
     </section>
   )
 }
 
-function Stat({ value, label }: { value: string; label: string }) {
+function Stat({
+  value,
+  label,
+}: {
+  value: string
+  label: string
+}) {
   return (
-    <div className="border-r border-slate-800 bg-[#0f172a] px-5 py-4 last:border-r-0">
-      <div className="text-lg font-semibold text-slate-200">{value}</div>
+    <div className="border-r border-blog-border-strong bg-[#0f172a] px-5 py-5 last:border-r-0">
+      <div className="font-mono text-xl font-medium text-slate-200">
+        {value}
+      </div>
 
-      <div className="mt-1 text-[10px] tracking-wider text-slate-600 uppercase">
+      <div className="mt-1 font-mono text-[9px] tracking-[0.15em] text-blog-faint uppercase">
         {label}
       </div>
     </div>
   )
 }
 
-function InfoField({ label, value }: { label: string; value: string }) {
+function InfoField({
+  label,
+  value,
+}: {
+  label: string
+  value: string
+}) {
   return (
     <div>
-      <p className="text-[10px] tracking-wider text-slate-600 uppercase">
+      <p className="font-mono text-[9px] tracking-[0.15em] text-blog-faint uppercase">
         {label}
       </p>
 
-      <p className="mt-2 text-sm text-slate-300">{value}</p>
+      <p className="mt-2 text-sm text-blog-muted">{value}</p>
     </div>
   )
 }
@@ -503,7 +592,7 @@ function InputField({
 }) {
   return (
     <label className="block">
-      <span className="text-[10px] tracking-wider text-slate-600 uppercase">
+      <span className="font-mono text-[9px] tracking-[0.15em] text-blog-faint uppercase">
         {label}
       </span>
 
@@ -511,7 +600,7 @@ function InputField({
         value={value}
         disabled={disabled}
         onChange={(e) => onChange?.(e.target.value)}
-        className="mt-2 h-10 w-full border border-slate-700 bg-[#0b1120] px-3 text-sm text-slate-200 transition outline-none focus:border-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
+        className="mt-2 h-10 w-full border border-blog-border-strong bg-blog-page px-3 text-sm text-blog-text-secondary outline-none transition focus:border-blog-accent-border disabled:cursor-not-allowed disabled:opacity-40"
       />
     </label>
   )
@@ -527,9 +616,9 @@ function SocialButton({
   return (
     <button
       title={label}
-      className="flex h-9 w-9 items-center justify-center border border-slate-700 bg-[#0b1120] text-slate-500 transition hover:border-cyan-400/50 hover:text-cyan-400"
+      className="flex h-9 w-9 items-center justify-center border border-blog-border-strong bg-blog-page text-blog-dim transition hover:border-cyan-400/40 hover:text-blog-accent"
     >
-      <Icon size={15} />
+      <Icon size={14} />
     </button>
   )
 }
@@ -544,20 +633,20 @@ function SocialInput({
   value: string
 }) {
   return (
-    <div className="flex items-center border border-slate-800 bg-[#0b1120]">
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center border-r border-slate-800 text-slate-500">
-        <Icon size={15} />
+    <div className="flex items-center border border-blog-border-strong bg-blog-page">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center border-r border-blog-border-strong text-blog-dim">
+        <Icon size={14} />
       </div>
 
       <div className="px-3">
-        <p className="text-[9px] tracking-wider text-slate-600 uppercase">
+        <p className="font-mono text-[9px] tracking-wider text-blog-faint uppercase">
           {label}
         </p>
 
-        <p className="mt-0.5 text-xs text-slate-400">{value}</p>
+        <p className="mt-0.5 text-xs text-blog-muted">{value}</p>
       </div>
 
-      <button className="mr-3 ml-auto text-slate-600 hover:text-slate-300">
+      <button className="mr-3 ml-auto text-blog-faint transition hover:text-blog-text-secondary">
         <Edit3 size={13} />
       </button>
     </div>

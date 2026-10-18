@@ -1,5 +1,4 @@
 import { SiteShell } from "@/components/layout/site-shell"
-import SideRayReloaded from "@/components/reactbits/SideRayReloaded"
 export default function SiteLayout({
   children,
 }: {
@@ -8,7 +7,6 @@ export default function SiteLayout({
   return (
     <>
       <SiteShell>
-        <SideRayReloaded />
         {children}
       </SiteShell>
     </>
