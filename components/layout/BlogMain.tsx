@@ -6,19 +6,21 @@ import { cn } from "@/lib/utils"
 import BlogCard from "@/app/(site)/blog/components/BlogCard"
 import BlogCardSkeleton from "@/app/(site)/blog/components/BlogCardSkeleton"
 import RoadmapCTA from "../RoadmapCTA"
-import type { BlogPost, BlogPostsResponse } from "@/types/blog"
+import type { BlogPostsResponse } from "@/types/blog"
+import { useFetch } from "@/hooks/useFetch"
 
 const PAGE_SIZE = 9
 
+type PostSearchParams = {
+  page?: number
+  limit?: number
+  q: string | undefined
+}
+
 export function BlogMain() {
-  const [posts, setPosts] = useState<BlogPost[]>([])
   const [query, setQuery] = useState("")
   const [debouncedQuery, setDebouncedQuery] = useState("")
   const [page, setPage] = useState(1)
-  const [total, setTotal] = useState(0)
-  const [totalPages, setTotalPages] = useState(0)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,44 +31,33 @@ export function BlogMain() {
     return () => clearTimeout(timer)
   }, [query])
 
-  useEffect(() => {
-    const controller = new AbortController()
+  const params: PostSearchParams = {
+    q: debouncedQuery || undefined,
+  }
 
-    async function fetchPosts() {
-      setLoading(true)
-      setError(false)
+  if (page > 1) {
+    params.page = page
+  }
 
-      try {
-        const params = new URLSearchParams({
-          page: String(page),
-          limit: String(PAGE_SIZE),
-        })
+  if (PAGE_SIZE !== 9) {
+    params.limit = PAGE_SIZE
+  }
 
-        if (debouncedQuery) params.set("q", debouncedQuery)
+  const {
+    data: result,
+    error,
+    isLoading,
+    isFetching,
+    isError,
+    refetch,
+  } = useFetch<BlogPostsResponse>("/api/posts", {
+    params,
+    keepPreviousData: true,
+  })
 
-        const response = await fetch(`/api/posts?${params}`, {
-          signal: controller.signal,
-        })
-
-        if (!response.ok) throw new Error("Failed to fetch posts")
-
-        const result: BlogPostsResponse = await response.json()
-
-        setPosts(result.data)
-        setTotal(result.pagination.total)
-        setTotalPages(result.pagination.totalPages)
-      } catch (err) {
-        if (err instanceof Error && err.name === "AbortError") return
-        setError(true)
-      } finally {
-        if (!controller.signal.aborted) setLoading(false)
-      }
-    }
-
-    fetchPosts()
-
-    return () => controller.abort()
-  }, [page, debouncedQuery])
+  const posts = result?.data ?? []
+  const total = result?.pagination.total ?? 0
+  const totalPages = result?.pagination.totalPages ?? 0
 
   return (
     <main className="bg-blog-page text-slate-50">
@@ -121,18 +112,21 @@ export function BlogMain() {
             </span>
           </div>
 
-          {error ? (
+          {isError ? (
             <div className="border border-red-400/20 p-8 text-sm text-red-300">
-              دریافت مطالب ناموفق بود. دوباره تلاش کنید.
+              دریافت مطالب ناموفق بود.
+              {error?.message && (
+                <p className="mt-2 text-xs text-red-300/70">{error.message}</p>
+              )}
               <button
                 type="button"
-                onClick={() => setPage((current) => current)}
+                onClick={refetch}
                 className="mr-3 underline"
               >
                 تلاش مجدد
               </button>
             </div>
-          ) : loading ? (
+          ) : isLoading ? (
             <div className="grid gap-px overflow-hidden border border-blog-border-strong bg-white/10 md:grid-cols-2 lg:grid-cols-3">
               {Array.from({ length: PAGE_SIZE }, (_, index) => (
                 <BlogCardSkeleton key={index} />
@@ -143,7 +137,13 @@ export function BlogMain() {
               مطلبی پیدا نشد.
             </div>
           ) : (
-            <div className="grid gap-px overflow-hidden border border-blog-border-strong bg-white/10 md:grid-cols-2 lg:grid-cols-3">
+            <div
+              className={cn(
+                "grid gap-px overflow-hidden border border-blog-border-strong bg-white/10 md:grid-cols-2 lg:grid-cols-3",
+                isFetching && "opacity-60 transition-opacity"
+              )}
+              aria-busy={isFetching}
+            >
               {posts.map((post) => (
                 <BlogCard post={post} key={post.id} />
               ))}
@@ -158,7 +158,7 @@ export function BlogMain() {
         <div className="flex items-center justify-between border-t border-blog-border-strong pt-6">
           <button
             type="button"
-            disabled={loading || page <= 1}
+            disabled={isFetching || page <= 1}
             onClick={() => setPage((current) => current - 1)}
             className="flex items-center gap-2 font-mono text-xs tracking-wide text-blog-muted uppercase transition-colors hover:text-blog-accent-hover disabled:cursor-not-allowed disabled:text-blog-faint"
           >
@@ -172,7 +172,7 @@ export function BlogMain() {
 
           <button
             type="button"
-            disabled={loading || page >= totalPages}
+            disabled={isFetching || totalPages === 0 || page >= totalPages}
             onClick={() => setPage((current) => current + 1)}
             className="flex items-center gap-2 font-mono text-xs tracking-wide text-blog-muted uppercase transition-colors hover:text-blog-accent-hover disabled:cursor-not-allowed disabled:text-blog-faint"
           >
