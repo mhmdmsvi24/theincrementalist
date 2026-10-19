@@ -100,7 +100,7 @@ export default function ProfilePage() {
       {/* Ambient glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-64 top-20 h-[600px] w-[600px] rounded-full bg-cyan-500/[0.035] blur-[140px]"
+        className="pointer-events-none absolute -right-64 top-20 h-150 w-150 rounded-full bg-cyan-500/[0.035] blur-[140px]"
       />
 
       <div className="relative mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-16">
@@ -151,16 +151,16 @@ export default function ProfilePage() {
 
         <section className="relative overflow-hidden border border-blog-border-strong bg-blog-surface-raised">
           {/* Accent line */}
-          <div className="h-px bg-gradient-to-r from-cyan-400 via-indigo-400 to-transparent" />
+          <div className="h-px bg-linear-to-r from-cyan-400 via-indigo-400 to-transparent" />
 
           {/* Decorative geometry */}
           <div
             aria-hidden
             className="pointer-events-none absolute right-[-10%] top-0 h-full w-[50%] opacity-20"
           >
-            <div className="absolute right-0 top-20 h-px w-full rotate-[-20deg] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
+            <div className="absolute right-0 top-20 h-px w-full rotate-[-20deg] bg-linear-to-r from-transparent via-cyan-400/30 to-transparent" />
 
-            <div className="absolute right-0 top-32 h-px w-[80%] rotate-[-20deg] bg-gradient-to-r from-transparent via-indigo-400/20 to-transparent" />
+            <div className="absolute right-0 top-32 h-px w-[80%] rotate-[-20deg] bg-linear-to-r from-transparent via-indigo-400/20 to-transparent" />
           </div>
 
           <div className="relative p-6 lg:p-8">
@@ -177,7 +177,7 @@ export default function ProfilePage() {
                       {profile.name}
                     </h2>
 
-                    <span className="border border-cyan-400/20 bg-cyan-400/[0.05] px-2 py-1 font-mono text-[9px] tracking-[0.15em] text-blog-accent">
+                    <span className="border border-cyan-400/20 bg-cyan-400/5 px-2 py-1 font-mono text-[9px] tracking-[0.15em] text-blog-accent">
                       MEMBER
                     </span>
                   </div>

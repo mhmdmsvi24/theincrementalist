@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
-import BlogTopicButton from "../shared/BlogTopicButtons"
 import { prisma } from "@/lib/prisma"
+import BlogTopicButtons from "@/app/(site)/blog/components/BlogTopicButtons"
 
 export async function BlogHero() {
   const posts = await prisma.post.findMany({
@@ -67,7 +67,7 @@ export async function BlogHero() {
 
           <div className="flex flex-wrap gap-2">
             {Object.entries(topics).map(([topic, count], index) => (
-              <BlogTopicButton
+              <BlogTopicButtons
                 key={topic}
                 topic={topic}
                 count={count}

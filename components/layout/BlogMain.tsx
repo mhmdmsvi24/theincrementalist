@@ -1,13 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Search, ChevronLeft, ChevronRight } from "lucide-react"
+import { Search } from "lucide-react"
 import { cn } from "@/lib/utils"
 import BlogCard from "@/app/(site)/blog/components/BlogCard"
 import BlogCardSkeleton from "@/app/(site)/blog/components/BlogCardSkeleton"
 import RoadmapCTA from "../RoadmapCTA"
 import type { BlogPostsResponse } from "@/types/blog"
 import { useFetch } from "@/hooks/useFetch"
+import BlogPagination from "../shared/Pagination"
 
 const PAGE_SIZE = 9
 
@@ -58,9 +59,10 @@ export function BlogMain() {
   const posts = result?.data ?? []
   const total = result?.pagination.total ?? 0
   const totalPages = result?.pagination.totalPages ?? 0
-
+  const isInitialLoading = isLoading || (!result && !isError)
+  
   return (
-    <main className="bg-blog-page text-slate-50">
+    <main className="bg-blog-page">
       <section className="relative">
         <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
           <div className="mb-14">
@@ -68,9 +70,8 @@ export function BlogMain() {
               <span className="font-mono text-xs tracking-[0.2em] text-blog-subtle">
                 جستجوی آرشیو
               </span>
-
               <span className="hidden font-mono text-xs text-blog-dim sm:block">
-                {total} ورودی
+                تعداد : {total}
               </span>
             </div>
 
@@ -126,13 +127,13 @@ export function BlogMain() {
                 تلاش مجدد
               </button>
             </div>
-          ) : isLoading ? (
+          ) : isInitialLoading ? (
             <div className="grid gap-px overflow-hidden border border-blog-border-strong bg-white/10 md:grid-cols-2 lg:grid-cols-3">
               {Array.from({ length: PAGE_SIZE }, (_, index) => (
                 <BlogCardSkeleton key={index} />
               ))}
             </div>
-          ) : posts.length === 0 ? (
+          ) : !isLoading && posts.length === 0 ? (
             <div className="border border-blog-border-strong p-12 text-center text-blog-muted">
               مطلبی پیدا نشد.
             </div>
@@ -151,36 +152,13 @@ export function BlogMain() {
           )}
         </div>
       </section>
-
+      <BlogPagination
+        page={page}
+        isFetching={isFetching}
+        totalPages={totalPages}
+        setPage={setPage}
+      />
       <RoadmapCTA />
-
-      <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-8">
-        <div className="flex items-center justify-between border-t border-blog-border-strong pt-6">
-          <button
-            type="button"
-            disabled={isFetching || page <= 1}
-            onClick={() => setPage((current) => current - 1)}
-            className="flex items-center gap-2 font-mono text-xs tracking-wide text-blog-muted uppercase transition-colors hover:text-blog-accent-hover disabled:cursor-not-allowed disabled:text-blog-faint"
-          >
-            <ChevronRight className="h-4 w-4" />
-            قبلی
-          </button>
-
-          <span className="font-mono text-xs text-blog-subtle">
-            صفحه {page} از {Math.max(totalPages, 1)}
-          </span>
-
-          <button
-            type="button"
-            disabled={isFetching || totalPages === 0 || page >= totalPages}
-            onClick={() => setPage((current) => current + 1)}
-            className="flex items-center gap-2 font-mono text-xs tracking-wide text-blog-muted uppercase transition-colors hover:text-blog-accent-hover disabled:cursor-not-allowed disabled:text-blog-faint"
-          >
-            بعدی
-            <ChevronLeft className="h-4 w-4" />
-          </button>
-        </div>
-      </section>
     </main>
   )
 }
