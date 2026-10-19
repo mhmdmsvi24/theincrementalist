@@ -1,15 +1,12 @@
 import { cn } from "@/lib/utils"
 
-type Topic = {
-  name: string
-  count: number
-}
-
 export default function BlogTopicButtons({
   topic,
+  count,
   index,
 }: {
-  topic: Topic
+  topic: string
+  count: number
   index: number
 }) {
   return (
@@ -37,7 +34,7 @@ export default function BlogTopicButtons({
             ]
       )}
     >
-      <span>{topic.name}</span>
+      <span>{topic}</span>
 
       <span
         className={cn(
@@ -47,7 +44,7 @@ export default function BlogTopicButtons({
             : "text-blog-dim group-hover:text-blog-subtle"
         )}
       >
-        {String(topic.count).padStart(2, "0")}
+        {String(count).padStart(2, "0")}
       </span>
     </button>
   )

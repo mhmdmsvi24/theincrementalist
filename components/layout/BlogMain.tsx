@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { Search, ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { BlogHero } from "./BlogHero"
 import BlogCard from "@/app/(site)/blog/components/BlogCard"
 import BlogCardSkeleton from "@/app/(site)/blog/components/BlogCardSkeleton"
 import RoadmapCTA from "../RoadmapCTA"
@@ -11,7 +10,7 @@ import type { BlogPost, BlogPostsResponse } from "@/types/blog"
 
 const PAGE_SIZE = 9
 
-export function BlogPage() {
+export function BlogMain() {
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [query, setQuery] = useState("")
   const [debouncedQuery, setDebouncedQuery] = useState("")
@@ -71,8 +70,6 @@ export function BlogPage() {
 
   return (
     <main className="bg-blog-page text-slate-50">
-      <BlogHero />
-
       <section className="relative">
         <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
           <div className="mb-14">

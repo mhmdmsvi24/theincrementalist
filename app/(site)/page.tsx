@@ -1,10 +1,12 @@
-import { BlogPage } from "@/components/layout/BlogMain"
+import { BlogHero } from "@/components/layout/BlogHero"
+import { BlogMain } from "@/components/layout/BlogMain"
 
 export default function Page() {
   return (
     <main>
       <div className="relative">
-        <BlogPage />
+        <BlogHero />
+        <BlogMain />
       </div>
     </main>
   )

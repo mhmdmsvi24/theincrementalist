@@ -1,23 +1,20 @@
-"use client"
-
 import { cn } from "@/lib/utils"
 import BlogTopicButton from "../shared/BlogTopicButtons"
+import { prisma } from "@/lib/prisma"
 
-const topics = [
-  { name: "آنالیز کسب و کار", count: 44 },
-  { name: "استارتاپ ها", count: 21 },
-  { name: "توسعه محصول", count: 18 },
-  { name: "استراتژی", count: 16 },
-  { name: "هوش مصنوعی", count: 14 },
-  { name: "MVP", count: 12 },
-  { name: "رشد", count: 11 },
-  { name: "Agile", count: 9 },
-  { name: "امور مالی", count: 8 },
-  { name: "عملیاتی", count: 7 },
-  { name: "مشاغل", count: 6 },
-]
+export async function BlogHero() {
+  const posts = await prisma.post.findMany({
+    where: { status: "PUBLISHED" },
+    select: { category: true },
+  })
 
-export function BlogHero() {
+  const topics = posts
+    .flatMap((post) => post.category)
+    .reduce<Record<string, number>>((acc, tag) => {
+      acc[tag] = (acc[tag] ?? 0) + 1
+      return acc
+    }, {})
+
   return (
     <section className="relative overflow-hidden border-b border-white/5 bg-blog-page">
       {/* Background grid */}
@@ -62,15 +59,20 @@ export function BlogHero() {
               فهرست موضوعی
             </span>
 
-            <div className="font-mono text-xs flex gap-2 text-blog-dim">
+            <div className="flex gap-2 font-mono text-xs text-blog-dim">
               <span>موضوعات:</span>
-              <span>{topics.length - 1}</span>
+              <span>{Object.entries(topics).length}</span>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {topics.map((topic, index) => (
-              <BlogTopicButton key={topic.name} topic={topic} index={index}></BlogTopicButton>
+            {Object.entries(topics).map(([topic, count], index) => (
+              <BlogTopicButton
+                key={topic}
+                topic={topic}
+                count={count}
+                index={index}
+              />
             ))}
           </div>
         </div>
